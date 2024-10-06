@@ -4,7 +4,7 @@ import Home from './Home';
 import Header from './Header';
 import MedievalDynasty from './MedievalDynasty';
 
-const basename = process.env.REACT_APP_BASE_PATH || '/';
+const basename = (import.meta.env.VITE_BASE_PATH ?? '/') as string;
 
 const router = createBrowserRouter(
   createRoutesFromElements(

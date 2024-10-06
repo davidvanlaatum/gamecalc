@@ -2,6 +2,8 @@ import { Outlet } from 'react-router-dom';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { AlertsProvider } from './controls/Alerts.tsx';
 
+const basename = (import.meta.env.VITE_BASE_PATH ?? '/') as string;
+
 function header() {
   return (
     <>
@@ -12,7 +14,7 @@ function header() {
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
             <Nav.Link href="/medieval_dynasty">
-              <img alt="logo" src="/T_GameSymbol.png" style={{ height: '1em' }} /> Medieval Dynasty
+              <img alt="logo" src={basename + 'T_GameSymbol.png'} style={{ height: '1em' }} /> Medieval Dynasty
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

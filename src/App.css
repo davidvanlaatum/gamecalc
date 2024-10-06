@@ -1,0 +1,83 @@
+#root {
+}
+
+.striped-row:nth-child(odd) {
+    /*background-color: #121212;*/
+    background-color: #1e1e1e;
+}
+
+.striped-row:nth-child(even) {
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.negative {
+    color: red !important;
+}
+
+.popover-auto-width {
+    max-width: fit-content !important;
+}
+
+.popover-auto-width .popover-body {
+    max-width: fit-content;
+}
+
+.sticky-header thead {
+    position: sticky;
+    top: 45px;
+    /*background-color: white; !* Optional: to ensure the header has a background *!*/
+    z-index: 3; /* Optional: to ensure the header stays on top */
+    background-color: var(--bs-table-bg);
+}
+
+.input-group-icon {
+    height: 1em;
+    width: 1em;
+}
+
+.inline-icon {
+    height: 1em;
+    width: 1em;
+}
+
+.prefix-icon {
+    margin-right: 0.5rem;
+    height: 1em;
+    width: 1em;
+}
+
+.suffix-icon {
+    margin-left: 0.25rem;
+    height: 1em;
+    width: 1em;
+}
+
+.zoom-icon-2x {
+    transform: scale(2); /* Zoom in by 2x */
+    transform-origin: center;
+}
+
+.zoom-icon-3x {
+    transform: scale(2.5); /* Zoom in by 2x */
+    transform-origin: center;
+}
+
+.zoom-icon-1-5x {
+    transform: scale(1.5) translateY(-0.15em); /* Zoom in by 2x */
+    transform-origin: center;
+}
+
+.number {
+    text-align: right;
+}
+
+.navbar {
+    background-color: var(--bs-body-bg);
+}
+
+.hidden {
+    display: none;
+}

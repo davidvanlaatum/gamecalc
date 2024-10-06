@@ -1,0 +1,48 @@
+:root {
+    --scroll-duration: 10s; /* Default value */
+}
+
+@keyframes scroll-vertical {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-100%);
+    }
+}
+
+.scrollable-table-container {
+    overflow: hidden;
+    max-height: 80vh; /* Adjust the height as needed */
+    position: relative;
+    display: block;
+}
+
+.scrollable-table-container thead {
+    z-index: 3;
+    position: sticky;
+}
+
+.scrollable-table-content {
+    display: table-row-group;
+}
+
+.scrollable-table-content.duplicate {
+    display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .scrollable .scrollable-table-content.duplicate {
+        display: table-row-group;
+    }
+
+    .scrollable .scrollable-table-content {
+        animation: scroll-vertical var(--scroll-duration) linear infinite; /* Adjust the duration as needed */
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .scrollable-table-container {
+        overflow: auto;
+    }
+}

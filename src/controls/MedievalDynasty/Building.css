@@ -1,0 +1,13 @@
+.building-expander {
+    margin-left: calc(var(--bs-card-cap-padding-x) * -0.8);
+}
+
+.building-buttons button {
+    border: 0;
+    padding: 0 4px;
+    color: unset;
+}
+
+.building-buttons button:hover {
+    color: unset;
+}

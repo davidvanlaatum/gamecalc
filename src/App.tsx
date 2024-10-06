@@ -4,6 +4,8 @@ import Home from './Home';
 import Header from './Header';
 import MedievalDynasty from './MedievalDynasty';
 
+const basename = process.env.REACT_APP_BASE_PATH || '/';
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Header />}>
@@ -11,6 +13,7 @@ const router = createBrowserRouter(
       <Route path={'/medieval_dynasty'} element={<MedievalDynasty />} />
     </Route>,
   ),
+  { basename },
 );
 
 function App() {

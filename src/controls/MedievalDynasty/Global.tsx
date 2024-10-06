@@ -5,9 +5,9 @@ import {
   isHouseData,
   Item,
   MedievalDynastyData,
-} from '../../data/MedievalDynasty';
+} from '@/data/MedievalDynasty';
 import Form from 'react-bootstrap/Form';
-import { convertStringToFloatOrCurrentValue } from '../../utils.ts';
+import { convertStringToFloatOrCurrentValue } from '@/utils.ts';
 import ItemIcon from './ItemIcon.tsx';
 import Row from 'react-bootstrap/Row';
 import { InputGroup, ToggleButton } from 'react-bootstrap';
@@ -39,7 +39,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
       onUpdate({
         ...data,
         developmentStage: Object.entries(developmentStageProps)
-          .filter(([, props]) => props.buildingLimit >= buildingCount)
+          .filter(([, p]) => p.buildingLimit >= buildingCount)
           .map(([key]) => key as DevelopmentStage)
           .find((v) => v),
       });

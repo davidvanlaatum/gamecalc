@@ -61,7 +61,7 @@ function BuildingList() {
               </>
             );
           }}
-          rowId={(key, child) => key + (child ?? '')}
+          rowId={(key, child) => key + (child?.[0] ?? '')}
         />
       </tbody>
     </Table>

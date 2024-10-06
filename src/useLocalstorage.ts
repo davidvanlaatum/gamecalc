@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
     const item = localStorage.getItem(key);
-    return item ? JSON.parse(item) : initialValue;
+    return item ? (JSON.parse(item) as T) : initialValue;
   });
 
   const setValue = (value: T) => {
@@ -17,7 +17,7 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
   useEffect(() => {
     const handleStorageChange = (event: StorageEvent) => {
       if (event.key === key && event.newValue !== JSON.stringify(storedValue)) {
-        setStoredValue(event.newValue ? JSON.parse(event.newValue) : initialValue);
+        setStoredValue(event.newValue ? (JSON.parse(event.newValue) as T) : initialValue);
       }
     };
 

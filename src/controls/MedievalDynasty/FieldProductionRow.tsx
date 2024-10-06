@@ -1,5 +1,5 @@
 import React from 'react';
-import { FieldRecipeCalculator, RecipeId } from '../../data/MedievalDynasty';
+import { FieldRecipeCalculator, RecipeId } from '@/data/MedievalDynasty';
 import { v4 as uuid } from 'uuid';
 import Col from 'react-bootstrap/Col';
 import { CloseButton, Form, OverlayTrigger, Popover, PopoverBody, Table } from 'react-bootstrap';

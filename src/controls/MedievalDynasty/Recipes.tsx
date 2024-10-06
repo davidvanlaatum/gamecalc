@@ -1,4 +1,4 @@
-import { BuildingType, Item, itemProperties, RecipeData, recipes } from '../../data/MedievalDynasty';
+import { BuildingType, Item, itemProperties, RecipeData, recipes } from '@/data/MedievalDynasty';
 import RecipeDetailsRow from './RecipeDetailsRow.tsx';
 import { Table } from 'react-bootstrap';
 import React, { useState } from 'react';
@@ -32,7 +32,7 @@ function sortFunction(sort: sortOptions): (a: [string, RecipeData], b: [string, 
 function Recipes() {
   const [sort, setSort] = useState<sortOptions>('building');
   const [filterName, setFilterName] = useState<string | null>('');
-  const [filterBuilding, setFilterBuilding] = useState<string | null>(null);
+  const [filterBuilding, setFilterBuilding] = useState<BuildingType | null>(null);
   const [filterIngredient, setFilterIngredient] = useState<Item | null>(null);
   const [filterProduction, setFilterProduction] = useState<Item | null>(null);
 
@@ -41,7 +41,7 @@ function Recipes() {
   }
 
   function onFilterBuilding(event: React.ChangeEvent<HTMLSelectElement>) {
-    setFilterBuilding(event.target.value || null);
+    setFilterBuilding((event.target.value as BuildingType) || null);
   }
 
   function onFilterIngredient(event: React.ChangeEvent<HTMLSelectElement>) {

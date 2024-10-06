@@ -2,11 +2,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Table as BootstrapTable, TableProps } from 'react-bootstrap';
 import './ScrollingTable.css';
 
-interface ScrollingTableProps extends TableProps {
-  children: React.ReactNode;
+interface ExtendedTableProps extends TableProps {
+  className?: string;
 }
 
-const ScrollingTable: React.FC<ScrollingTableProps> = ({ children, className, style, ...props }) => {
+const ScrollingTable: React.FC<ExtendedTableProps> = ({ children, className, style, ...props }) => {
   const containerRef = useRef<HTMLTableElement>(null);
   const duplicate = useRef<HTMLTableSectionElement>(null);
   const [isScrollable, setIsScrollable] = useState(false);
@@ -24,16 +24,20 @@ const ScrollingTable: React.FC<ScrollingTableProps> = ({ children, className, st
 
   const wrappedChildren = React.Children.map(children, (child) => {
     if (React.isValidElement(child) && child.type === 'tbody') {
+      const element = child as React.ReactElement<HTMLElement>;
       return [
         React.cloneElement(
-          child,
-          { className: 'scrollable-table-content' } as React.HTMLAttributes<HTMLElement>,
-          child.props.children,
+          element,
+          { className: 'scrollable-table-content' },
+          element.props.children as React.ReactNode,
         ),
         React.cloneElement(
-          child,
-          { className: 'duplicate scrollable-table-content', ref: duplicate } as React.HTMLAttributes<HTMLElement>,
-          child.props.children,
+          element,
+          {
+            className: 'duplicate scrollable-table-content',
+            ref: duplicate,
+          } as React.RefAttributes<HTMLTableSectionElement>,
+          element.props.children as React.ReactNode,
         ),
       ];
     }

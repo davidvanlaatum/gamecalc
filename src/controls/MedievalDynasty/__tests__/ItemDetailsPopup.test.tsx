@@ -14,6 +14,7 @@ describe('ItemDetailsPopup', () => {
           <span>Hover Me</span>
         </ItemDetailsPopup>,
       );
+      // eslint-disable-next-line @typescript-eslint/require-await
       await act(async () => {
         fireEvent.mouseOver(getByText(baseElement, 'Hover Me'));
       });

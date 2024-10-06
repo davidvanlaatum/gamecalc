@@ -1,5 +1,5 @@
 import React from 'react';
-import { Item, providers } from '../../data/MedievalDynasty';
+import { Item, providers } from '@/data/MedievalDynasty';
 import { Form, Table } from 'react-bootstrap';
 import ItemIcon from './ItemIcon.tsx';
 

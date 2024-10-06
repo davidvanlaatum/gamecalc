@@ -1,5 +1,5 @@
 import { HTMLAttributes, useEffect, useState } from 'react';
-import { getItemIcon, Item } from '../../data/MedievalDynasty';
+import { getItemIcon, Item } from '@/data/MedievalDynasty';
 import Image from '../Image.tsx';
 
 export interface ItemIconProps extends HTMLAttributes<HTMLImageElement> {
@@ -11,7 +11,7 @@ function ItemIcon({ item, className, ...extra }: Readonly<ItemIconProps>) {
   const zoom = item == Item.Food || item == Item.Water || item == Item.Wood;
 
   useEffect(() => {
-    getItemIcon(item).then(setIconUrl);
+    getItemIcon(item).then(setIconUrl, () => setIconUrl(undefined));
   }, [item]);
 
   return (

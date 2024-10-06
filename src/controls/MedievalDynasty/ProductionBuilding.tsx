@@ -1,4 +1,4 @@
-import { BuildingCalculator, BuildingData, buildingProps, Item, RecipeId } from '../../data/MedievalDynasty';
+import { BuildingCalculator, BuildingData, buildingProps, Item, RecipeId } from '@/data/MedievalDynasty';
 import { FC, ReactNode, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import Row from 'react-bootstrap/Row';
@@ -14,6 +14,7 @@ interface ProductionBuildingProps {
   onUpdate: (updatedBuilding: BuildingData) => void;
   inspiringSpeech: number;
   taxPercent: number;
+  daysPerSeason: number;
   setTitleContent: (content: ReactNode) => void;
 }
 
@@ -22,9 +23,10 @@ const ProductionBuilding: FC<ProductionBuildingProps> = ({
   onUpdate,
   inspiringSpeech,
   taxPercent,
+  daysPerSeason,
   setTitleContent,
 }) => {
-  const calc = new BuildingCalculator(building, inspiringSpeech, taxPercent);
+  const calc = new BuildingCalculator(building, inspiringSpeech, taxPercent, daysPerSeason);
 
   useEffect(() => {
     setTitleContent(

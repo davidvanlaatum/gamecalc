@@ -135,7 +135,7 @@ const ItemDetailsPopup: FC<ItemDetailsPopupProps> = ({ children, item, enable = 
                 <tr>
                   <th>Buy for</th>
                   <td>
-                    {new Array(4)
+                    {new Array<number>(4)
                       .fill(basePrice * 1.5)
                       .map((x, i) => x - basePrice * (0.1 * i))
                       .map((x) => numberFormat.format(x))
@@ -145,7 +145,7 @@ const ItemDetailsPopup: FC<ItemDetailsPopupProps> = ({ children, item, enable = 
                 <tr>
                   <th>Sell for</th>
                   <td>
-                    {new Array(4)
+                    {new Array<number>(4)
                       .fill(basePrice / 2)
                       .map((x, i) => x + basePrice * (0.1 * i))
                       .map((x) => numberFormat.format(x))

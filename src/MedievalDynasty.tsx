@@ -33,7 +33,7 @@ function MedievalDynasty() {
     } else if (JSON.stringify(data) !== previousData) {
       const id = setTimeout(() => {
         if (JSON.stringify(data) !== previousData) {
-          const undo = [...undoData, JSON.parse(previousData)];
+          const undo: object[] = [...undoData, JSON.parse(previousData) as object];
           if (undo.length > 10) {
             undo.shift();
           }
@@ -86,7 +86,7 @@ function MedievalDynasty() {
           const entries = Object.entries(recipe.skillSamples ?? {});
           const maxSkill = Math.max(...entries.map(([key]) => parseInt(key)));
           const dataKey = recipe.name + '@' + recipe.building;
-          data[dataKey] = new Array(maxSkill).fill(undefined);
+          data[dataKey] = new Array(maxSkill).fill(undefined) as (number | undefined)[];
           entries.forEach(([key, value]) => {
             data[dataKey][parseInt(key) - 1] = value;
           });
@@ -102,15 +102,17 @@ function MedievalDynasty() {
     saveAs(blob, 'skillSamples.csv');
   }
 
-  function toClipboard() {
-    navigator.clipboard.writeText(JSON.stringify(data, null, 2));
+  async function toClipboard() {
+    await navigator.clipboard.writeText(JSON.stringify(data, null, 2));
   }
 
-  function fromClipboard() {
-    navigator.clipboard.readText().then((text) => {
+  async function fromClipboard() {
+    await navigator.clipboard.readText().then((text) => {
       try {
-        const json = JSON.parse(text);
-        setData(json);
+        const json: unknown = JSON.parse(text);
+        if (typeof json === 'object' && json !== null) {
+          setData(json);
+        }
       } catch (e) {
         console.error(e);
       }
@@ -198,8 +200,8 @@ function MedievalDynasty() {
               <Button onClick={() => generateCSV()}>Generate Skills Sample CSV</Button>
             </InputGroup>
             <InputGroup className="w-auto">
-              <Button onClick={() => toClipboard()}>Copy JSON</Button>
-              <Button onClick={() => fromClipboard()}>Paste JSON</Button>
+              <Button onClick={() => void toClipboard()}>Copy JSON</Button>
+              <Button onClick={() => void fromClipboard()}>Paste JSON</Button>
             </InputGroup>
           </Row>
         </Tab>

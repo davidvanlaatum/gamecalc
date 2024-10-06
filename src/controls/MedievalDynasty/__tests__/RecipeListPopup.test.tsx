@@ -15,6 +15,7 @@ describe('RecipeListPopup', () => {
       </RecipeListPopup>,
     );
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     await act(async () => {
       fireEvent.mouseOver(getByText(baseElement, 'Hover Me'));
     });
@@ -30,6 +31,7 @@ describe('RecipeListPopup', () => {
       expect(bodyRow.children[i]).toHaveExactlyTextContent(text);
     });
 
+    // eslint-disable-next-line @typescript-eslint/require-await
     await act(async () => {
       fireEvent.mouseOut(getByText(baseElement, 'Hover Me'));
     });

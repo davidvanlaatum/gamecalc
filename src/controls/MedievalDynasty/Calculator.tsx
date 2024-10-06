@@ -7,11 +7,11 @@ import {
   Item,
   MedievalDynastyCalculator,
   MedievalDynastyData,
-} from '../../data/MedievalDynasty';
+} from '@/data/MedievalDynasty';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Global from './Global.tsx';
-import Building from './Building.tsx';
+import Building, { BuildingRef } from './Building.tsx';
 import { Accordion, AccordionBody, AccordionHeader, AccordionItem, Card, Dropdown } from 'react-bootstrap';
 import { v4 as uuid } from 'uuid';
 import Usage from './Usage.tsx';
@@ -25,7 +25,7 @@ function Calculator() {
   const [data, setData] = useLocalStorage<MedievalDynastyData>('medieval_dynasty', {});
   const calc = new MedievalDynastyCalculator(data);
   const alerts = useAlerts();
-  const buildingRefs = useRef<((HTMLDivElement & { expand?: () => void; collapse?: () => void }) | null)[]>([]);
+  const buildingRefs = useRef<(BuildingRef | null)[]>([]);
   const [buildingCount, setBuildingCount] = useState<number>();
 
   useEffect(() => {
@@ -83,7 +83,7 @@ function Calculator() {
     });
   }
 
-  const addToBuildings = (el: HTMLInputElement | null) => {
+  const addToBuildings = (el: BuildingRef | null) => {
     if (el && !buildingRefs.current.includes(el)) {
       buildingRefs.current.push(el);
     }

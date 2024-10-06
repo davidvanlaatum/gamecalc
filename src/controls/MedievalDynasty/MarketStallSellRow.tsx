@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Col from 'react-bootstrap/Col';
 import { CloseButton, Form, InputGroup, Row } from 'react-bootstrap';
 import ItemIcon from './ItemIcon.tsx';
-import { Item } from '../../data/MedievalDynasty';
+import { Item } from '@/data/MedievalDynasty';
 import InputGroupText from 'react-bootstrap/InputGroupText';
 import { v4 as uuid } from 'uuid';
 

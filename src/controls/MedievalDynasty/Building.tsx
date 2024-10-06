@@ -8,7 +8,7 @@ import {
   isHouseData,
   isMarketStallData,
   isStorageBuildingData,
-} from '../../data/MedievalDynasty';
+} from '@/data/MedievalDynasty';
 import { Button, ButtonGroup, Card } from 'react-bootstrap';
 import BuildingIcon from './BuildingIcon.tsx';
 import ProductionBuilding from './ProductionBuilding.tsx';
@@ -33,7 +33,12 @@ interface BuildingProps {
   taxPercent: number;
 }
 
-const Building = forwardRef<unknown, BuildingProps>(
+export interface BuildingRef {
+  collapse(): void;
+  expand(): void;
+}
+
+const Building = forwardRef<BuildingRef, BuildingProps>(
   (
     {
       building,
@@ -82,6 +87,7 @@ const Building = forwardRef<unknown, BuildingProps>(
                 data={building}
                 onUpdate={onUpdate}
                 taxPercent={taxPercent}
+                daysPerSeason={daysPerSeason}
                 setTitleContent={setTitleContent}
               />
             );
@@ -92,6 +98,7 @@ const Building = forwardRef<unknown, BuildingProps>(
                 onUpdate={onUpdate}
                 inspiringSpeech={inspiringSpeech}
                 taxPercent={taxPercent}
+                daysPerSeason={daysPerSeason}
                 setTitleContent={setTitleContent}
               />
             );
@@ -102,6 +109,7 @@ const Building = forwardRef<unknown, BuildingProps>(
                 onUpdate={onUpdate}
                 taxPercent={taxPercent}
                 inspiringSpeech={inspiringSpeech}
+                daysPerSeason={daysPerSeason}
                 setTitleContent={setTitleContent}
               />
             );
@@ -111,6 +119,7 @@ const Building = forwardRef<unknown, BuildingProps>(
                 data={building}
                 onUpdate={onUpdate}
                 taxPercent={taxPercent}
+                daysPerSeason={daysPerSeason}
                 setTitleContent={setTitleContent}
               />
             );
@@ -186,5 +195,6 @@ const Building = forwardRef<unknown, BuildingProps>(
     );
   },
 );
+Building.displayName = 'Building';
 
 export default Building;

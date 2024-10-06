@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import RenderDiff from '../RenderDiff.tsx';
-import { BuildingType, MedievalDynastyData } from '../../../data/MedievalDynasty';
+import { BuildingType, MedievalDynastyData } from '@/data/MedievalDynasty';
 import { diff } from 'deep-diff';
 
 describe('RenderDiff', () => {

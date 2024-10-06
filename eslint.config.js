@@ -7,18 +7,22 @@ import eslintPluginPrettier from 'eslint-plugin-prettier';
 import reactLint from 'eslint-plugin-react';
 
 export default tseslint.config(
-  { ignores: ['dist'] },
+  { ignores: ['dist', 'coverage'] },
   {
     extends: [
       js.configs.recommended,
       reactLint.configs.flat.recommended,
       reactLint.configs.flat['jsx-runtime'],
-      ...tseslint.configs.recommended,
+      ...tseslint.configs.recommendedTypeChecked,
     ],
-    files: ['**/*.{ts,tsx,js}'],
+    files: ['{src,scripts}/**/*.{ts,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        project: ['./tsconfig.node.json', './tsconfig.app.json'],
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
     settings: {
       react: {

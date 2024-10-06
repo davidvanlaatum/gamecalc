@@ -1,5 +1,5 @@
 import { HTMLAttributes, useEffect, useState } from 'react';
-import { BuildingType, getBuildingIcon } from '../../data/MedievalDynasty';
+import { BuildingType, getBuildingIcon } from '@/data/MedievalDynasty';
 import Image from '../Image.tsx';
 
 export interface ItemIconProps extends HTMLAttributes<HTMLImageElement> {
@@ -17,7 +17,7 @@ function BuildingIcon({ building, level, className, ...extra }: Readonly<ItemIco
 
   const [iconUrl, setIconUrl] = useState<string>();
   useEffect(() => {
-    getBuildingIcon(building).then(setIconUrl);
+    getBuildingIcon(building).then(setIconUrl, () => setIconUrl(undefined));
   }, [building]);
   return (
     <span title={building + (level ? ' ' + toRoman(level) : '')}>

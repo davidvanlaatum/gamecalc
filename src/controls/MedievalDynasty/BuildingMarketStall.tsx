@@ -2,7 +2,7 @@ import { FC, ReactNode, useEffect } from 'react';
 import { Dropdown, Form, InputGroup, Row } from 'react-bootstrap';
 import InputGroupText from 'react-bootstrap/InputGroupText';
 import ItemIcon from './ItemIcon.tsx';
-import { Item, ItemCategory, MarketStallCalculator, MarketStallData, SkillType } from '../../data/MedievalDynasty';
+import { Item, ItemCategory, MarketStallCalculator, MarketStallData, SkillType } from '@/data/MedievalDynasty';
 import SkillIcon from './SkillIcon.tsx';
 import { v4 as uuid } from 'uuid';
 import MarketStallSellRow from './MarketStallSellRow.tsx';
@@ -12,6 +12,7 @@ interface BuildingStallProps {
   onUpdate: (updatedBuilding: MarketStallData) => void;
   taxPercent: number;
   inspiringSpeech: number;
+  daysPerSeason: number;
   setTitleContent: (content: ReactNode) => void;
 }
 
@@ -20,9 +21,10 @@ const BuildingMarketStall: FC<BuildingStallProps> = ({
   onUpdate,
   taxPercent,
   inspiringSpeech,
+  daysPerSeason,
   setTitleContent,
 }) => {
-  const calc = new MarketStallCalculator(data, taxPercent, inspiringSpeech);
+  const calc = new MarketStallCalculator(data, taxPercent, inspiringSpeech, daysPerSeason);
 
   useEffect(() => {
     setTitleContent(

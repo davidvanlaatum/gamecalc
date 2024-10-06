@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect } from 'react';
-import { HouseCalculator, HouseData, Item } from '../../data/MedievalDynasty';
+import { HouseCalculator, HouseData, Item } from '@/data/MedievalDynasty';
 import { Form, InputGroup } from 'react-bootstrap';
 import InputGroupText from 'react-bootstrap/InputGroupText';
 import ItemIcon from './ItemIcon.tsx';
@@ -8,11 +8,12 @@ export interface BuildingHouseProps {
   data: HouseData;
   onUpdate: (updatedBuilding: HouseData) => void;
   taxPercent: number;
+  daysPerSeason: number;
   setTitleContent: (content: ReactNode) => void;
 }
 
-const BuildingHouse: FC<BuildingHouseProps> = ({ data, onUpdate, taxPercent, setTitleContent }) => {
-  const calc = new HouseCalculator(data, taxPercent);
+const BuildingHouse: FC<BuildingHouseProps> = ({ data, onUpdate, taxPercent, daysPerSeason, setTitleContent }) => {
+  const calc = new HouseCalculator(data, taxPercent, daysPerSeason);
 
   useEffect(() => {
     setTitleContent(
@@ -23,7 +24,7 @@ const BuildingHouse: FC<BuildingHouseProps> = ({ data, onUpdate, taxPercent, set
         </span>
       </>,
     );
-  }, [calc.tax, setTitleContent]);
+  }, [calc.count, calc.tax, setTitleContent]);
 
   return (
     <InputGroup>

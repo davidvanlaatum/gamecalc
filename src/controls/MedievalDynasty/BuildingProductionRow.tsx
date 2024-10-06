@@ -1,5 +1,5 @@
 import React from 'react';
-import { BuildingRecipeCalculator, RecipeId } from '../../data/MedievalDynasty';
+import { BuildingRecipeCalculator, RecipeId } from '@/data/MedievalDynasty';
 import Col from 'react-bootstrap/Col';
 import { CloseButton, InputGroup, OverlayTrigger, Popover, PopoverBody, Table } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';

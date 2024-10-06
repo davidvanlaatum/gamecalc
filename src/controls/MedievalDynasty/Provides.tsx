@@ -1,5 +1,5 @@
 import { Table } from 'react-bootstrap';
-import { Item, itemProperties, ItemPropertiesProvides, providers, ProvidesByProduct } from '../../data/MedievalDynasty';
+import { Item, itemProperties, ItemPropertiesProvides, providers, ProvidesByProduct } from '@/data/MedievalDynasty';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import TreeTable from '../TreeTable.tsx';
 import ItemIcon from './ItemIcon.tsx';

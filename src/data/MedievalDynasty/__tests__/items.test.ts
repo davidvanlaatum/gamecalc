@@ -57,7 +57,7 @@ describe('items', async () => {
         test(`Item ${key} has type`, () => {
           const expectedType = itemProperties[value]?.provides?.some((provides) => provides.item == Item.Food)
             ? ItemCategory.Food
-            : expect.any(String);
+            : (expect.any(String) as string);
           expect(itemProperties[value], getLineNumber(key)).toHaveProperty('type', expectedType);
         });
         if (itemProperties[value]?.type == ItemCategory.Food) {
@@ -86,7 +86,7 @@ describe('items', async () => {
   });
 });
 
-describe('getItemIcon', async () => {
+describe('getItemIcon', () => {
   test('returns the correct icon for Log', async () => {
     expect(await getItemIcon(Item.Log)).toEqual('/src/assets/MedievalDynasty/ItemsIcons/T_Icon_Log.png');
   });

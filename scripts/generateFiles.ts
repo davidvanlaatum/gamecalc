@@ -8,6 +8,7 @@ import { recipes } from '@/data/MedievalDynasty/recipes.ts';
 // Get the directory name in ES module context
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const srcDir = path.normalize(path.join(__dirname, '..', 'src'));
 
 // Function to check if a file exists
 async function fileExists(filePath: string): Promise<boolean> {
@@ -151,10 +152,10 @@ async function generateIcons() {
     [Item.WoolyMilkCapMushroom]: 'WoolyMilkcapMushroom',
   };
 
-  const findIconFunctions: ((item: Item, tried: string[]) => Promise<string | null>)[] = [
+  const findIconFunctions: ((item: Item, tried: string[]) => Promise<string | null> | string | null)[] = [
     async (item, tried) => {
       const iconName = iconRemaps[item] ?? item.replace(/ /g, '');
-      const iconPath = path.join(__dirname, 'src', 'assets', 'MedievalDynasty', 'ItemsIcons', `T_Icon_${iconName}.png`);
+      const iconPath = path.join(srcDir, 'assets', 'MedievalDynasty', 'ItemsIcons', `T_Icon_${iconName}.png`);
       if (await fileExists(iconPath)) {
         return iconPath;
       }
@@ -166,26 +167,26 @@ async function generateIcons() {
       tried.push(withs);
       return null;
     },
-    async (item) => {
+    (item) => {
       if (item.includes('Durability')) {
-        return path.join(__dirname, 'src', 'assets', 'MedievalDynasty', 'Icon_Durability_White.png');
+        return path.join(srcDir, 'assets', 'MedievalDynasty', 'Icon_Durability_White.png');
       }
       return null;
     },
-    async (item) => {
+    (item) => {
       if (item.includes('Wine') || item.includes('Juice')) {
-        return path.join(__dirname, 'src', 'assets', 'MedievalDynasty', 'ItemsIcons', 'T_Icon_WineBottle.png');
+        return path.join(srcDir, 'assets', 'MedievalDynasty', 'ItemsIcons', 'T_Icon_WineBottle.png');
       }
       return null;
     },
-    async (item) => {
+    (item) => {
       if (item.includes('Beer') || item.includes('Ale')) {
-        return path.join(__dirname, 'src', 'assets', 'MedievalDynasty', 'ItemsIcons', 'T_Icon_BeerBottle.png');
+        return path.join(srcDir, 'assets', 'MedievalDynasty', 'ItemsIcons', 'T_Icon_BeerBottle.png');
       }
       return null;
     },
     async (item, tried) => {
-      const iconPath = path.join(__dirname, 'src', 'assets', 'MedievalDynasty', `T_Icon_${item}.png`);
+      const iconPath = path.join(srcDir, 'assets', 'MedievalDynasty', `T_Icon_${item}.png`);
       if (await fileExists(iconPath)) {
         return iconPath;
       }
@@ -210,15 +211,13 @@ async function generateIcons() {
           if (!iconPath) {
             throw new Error(`Icon not found for item: ${item} tried:\n${tried.join('\n')}`);
           }
-          iconPath = path.relative(path.join(__dirname, 'src', 'data', 'MedievalDynasty'), iconPath);
-          // return `${JSON.stringify(item)}: () => import('${iconPath}').then(module => module.default),`;
+          iconPath = path.relative(path.join(srcDir, 'data', 'MedievalDynasty'), iconPath);
           return `[Item.${key}]: icons['${iconPath}'],`;
-          // return `${JSON.stringify(item)}: ${JSON.stringify(iconPath)},`;
         }),
     )
   ).join('\n');
   await writeSourceFile(
-    path.join(__dirname, 'src', 'data', 'MedievalDynasty', 'icons.ts'),
+    path.join(srcDir, 'data', 'MedievalDynasty', 'icons.ts'),
     `
 import { Item } from './items';
 
@@ -235,7 +234,7 @@ ${itemIconMappings}
 
 async function generateRecipes() {
   await writeSourceFile(
-    path.join(__dirname, 'src', 'data', 'MedievalDynasty', 'recipes-generated.ts'),
+    path.join(srcDir, 'data', 'MedievalDynasty', 'recipes-generated.ts'),
     `export enum Recipe {
   ${Object.keys(recipes)
     .map((recipe) => `${recipe.charAt(0).toUpperCase() + recipe.slice(1)} = '${recipe}',`)

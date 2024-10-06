@@ -1,5 +1,5 @@
 import { FC, ReactNode, useEffect } from 'react';
-import { FieldCalculator, FieldData, Item, RecipeId } from '../../data/MedievalDynasty';
+import { FieldCalculator, FieldData, Item, RecipeId } from '@/data/MedievalDynasty';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import FieldProductionRow from './FieldProductionRow.tsx';
 import ItemIcon from './ItemIcon.tsx';

@@ -8,8 +8,8 @@ interface Alerts {
 }
 
 class AlertsImpl implements Alerts {
-  private alertData: string[];
-  private setAlertData: (value: string[]) => void;
+  private readonly alertData: string[];
+  private readonly setAlertData: (value: string[]) => void;
 
   constructor(alertData: string[], setAlertData: (value: string[]) => void) {
     this.alertData = alertData;
@@ -60,6 +60,7 @@ export const AlertsProvider: React.FC<AlertsProviderProps> = ({ children }) => {
   );
 };
 
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAlerts = () => {
   const context = useContext(SharedObjectContext);
   if (context === undefined) {

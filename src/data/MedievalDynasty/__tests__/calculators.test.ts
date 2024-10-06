@@ -11,7 +11,7 @@ import '../../../__tests__/matchers';
 import '../../../__tests__/matchers.d';
 
 describe('MedievalDynastyCalculator', () => {
-  test('calculates', async () => {
+  test('calculates', () => {
     const calc = new MedievalDynastyCalculator({
       requiredFood: 10,
       requiredWater: 10,
@@ -38,9 +38,9 @@ describe('MedievalDynastyCalculator', () => {
             item: Item.Bucket,
             log: [
               { log: 'Bucket of Water (Well)', amount: -0.13475, count: 1 },
-              { log: 'Byproduct of Bucket of Water -> Water', amount: expect.closeTo(0.045), count: 1 },
+              { log: 'Byproduct of Bucket of Water -> Water', amount: expect.closeTo(0.045) as number, count: 1 },
             ],
-            produced: expect.closeTo(0.045),
+            produced: expect.closeTo(0.045) as number,
             consumed: 0.13475,
             net: -0.08975,
           },
@@ -85,7 +85,7 @@ describe('MedievalDynastyCalculator', () => {
 });
 
 describe('ItemUsageCalculator', () => {
-  it('calculates production and consumption', async () => {
+  it('calculates production and consumption', () => {
     const usage = new ItemUsageCalculator();
     expect(usage.toArray()).toEqual([]);
     usage.addProduction(Item.Water, 10, 'Well');
@@ -114,8 +114,8 @@ describe('ItemUsageCalculator', () => {
     ]);
   });
 
-  it('resolves provides', async () => {
-    const n = itemProperties[Item.BucketOfWater]!.provides!.find((x) => x.item === Item.Water)!.amount!;
+  it('resolves provides', () => {
+    const n = itemProperties[Item.BucketOfWater]!.provides!.find((x) => x.item === Item.Water)!.amount;
     const usage = new ItemUsageCalculator();
     usage.addConsumption(Item.Water, n, 'required');
     usage.addProduction(Item.BucketOfWater, 0.5, 'Well');

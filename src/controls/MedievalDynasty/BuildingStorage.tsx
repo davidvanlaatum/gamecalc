@@ -6,11 +6,12 @@ interface BuildingStorageProps {
   data: StorageBuildingData;
   onUpdate: (updatedBuilding: StorageBuildingData) => void;
   taxPercent: number;
+  daysPerSeason: number;
   setTitleContent: (content: ReactNode) => void;
 }
 
-const BuildingStorage: FC<BuildingStorageProps> = ({ data, taxPercent, setTitleContent }) => {
-  const calc = new StorageBuildingCalculator(data, taxPercent);
+const BuildingStorage: FC<BuildingStorageProps> = ({ data, taxPercent, daysPerSeason, setTitleContent }) => {
+  const calc = new StorageBuildingCalculator(data, taxPercent, daysPerSeason);
   useEffect(() => {
     setTitleContent(
       <span className="ps-2">

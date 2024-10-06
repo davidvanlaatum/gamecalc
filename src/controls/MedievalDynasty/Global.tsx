@@ -139,8 +139,17 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
               onChange={() => onUpdate({ ...data, inspiringSpeech: i })}
               className="d-flex align-items-center justify-content-center"
               variant="secondary"
+              size="sm"
             >
-              {i}
+              {i > 0 ? (
+                <img
+                  alt={`${i}`}
+                  className="inline-icon zoom-icon-2x"
+                  src={`src/assets/MedievalDynasty/Roman_${i}.png`}
+                />
+              ) : (
+                i
+              )}
             </ToggleButton>
           ))}
           <InputGroupText>

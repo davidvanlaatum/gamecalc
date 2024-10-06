@@ -7,6 +7,7 @@ import commonjs from 'vite-plugin-commonjs';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), commonjs()],
+  base: process.env.VITE_BASE_PATH ?? '/',
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),

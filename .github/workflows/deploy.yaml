@@ -15,4 +15,6 @@ jobs:
       - id: build-publish
         uses: bitovi/github-actions-react-to-github-pages@v1.2.4
         with:
-          path: dist/ # change to your build folder
+          path: dist # change to your build folder
+        env:
+          VITE_BASE_PATH: '/gamecalc/'

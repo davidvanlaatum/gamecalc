@@ -20,6 +20,7 @@ const RecipeListPopup: FC<RecipeListPopupProps> = ({
   showBuildingName = true,
   ...props
 }) => {
+  const entries = Object.entries(recipes);
   const overlay = (
     <Popover className="popover-auto-width">
       <PopoverBody>
@@ -33,7 +34,7 @@ const RecipeListPopup: FC<RecipeListPopupProps> = ({
             </tr>
           </thead>
           <tbody>
-            {Object.entries(recipes).map(([id, recipe]) => (
+            {entries.map(([id, recipe]) => (
               <RecipeDetailsRow
                 recipe={recipe}
                 showSkill={false}
@@ -48,7 +49,7 @@ const RecipeListPopup: FC<RecipeListPopupProps> = ({
     </Popover>
   );
 
-  return enable ? (
+  return enable && entries.length > 0 ? (
     <OverlayTrigger overlay={overlay} {...props}>
       {children}
     </OverlayTrigger>

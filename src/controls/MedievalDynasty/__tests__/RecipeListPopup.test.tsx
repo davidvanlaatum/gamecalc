@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { fireEvent, getByRole, getByText, render, waitFor } from '@testing-library/react';
+import { fireEvent, getByRole, getByText, queryByRole, render, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import RecipeListPopup from '../RecipeListPopup';
 import { act } from 'react';
@@ -37,5 +37,20 @@ describe('RecipeListPopup', () => {
     });
 
     expect(popup).not.toBeInTheDocument();
+  });
+
+  it('should not popup if no recipes', async () => {
+    const { baseElement } = render(
+      <RecipeListPopup recipes={{}}>
+        <span>Hover Me</span>
+      </RecipeListPopup>,
+    );
+
+    // eslint-disable-next-line @typescript-eslint/require-await
+    await act(async () => {
+      fireEvent.mouseOver(getByText(baseElement, 'Hover Me'));
+    });
+
+    expect(queryByRole(baseElement, 'tooltip')).not.toBeInTheDocument();
   });
 });

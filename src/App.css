@@ -1,14 +1,3 @@
-#root {
-}
-
-.striped-row:nth-child(odd) {
-    /*background-color: #121212;*/
-    background-color: #1e1e1e;
-}
-
-.striped-row:nth-child(even) {
-}
-
 .cursor-pointer {
     cursor: pointer;
 }
@@ -28,8 +17,7 @@
 .sticky-header thead {
     position: sticky;
     top: 45px;
-    /*background-color: white; !* Optional: to ensure the header has a background *!*/
-    z-index: 3; /* Optional: to ensure the header stays on top */
+    z-index: 3;
     background-color: var(--bs-table-bg);
 }
 
@@ -56,17 +44,17 @@
 }
 
 .zoom-icon-2x {
-    transform: scale(2); /* Zoom in by 2x */
+    transform: scale(2);
     transform-origin: center;
 }
 
 .zoom-icon-3x {
-    transform: scale(2.5); /* Zoom in by 2x */
+    transform: scale(2.5);
     transform-origin: center;
 }
 
 .zoom-icon-1-5x {
-    transform: scale(1.5) translateY(-0.15em); /* Zoom in by 2x */
+    transform: scale(1.5) translateY(-0.15em);
     transform-origin: center;
 }
 
@@ -80,4 +68,11 @@
 
 .hidden {
     display: none;
+}
+
+.expander {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
 }

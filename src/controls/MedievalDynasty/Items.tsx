@@ -1,5 +1,5 @@
 import { Form, Table } from 'react-bootstrap';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
   BuildingType,
   Item,
@@ -25,6 +25,43 @@ function Items() {
 
   function provides(item: Item): Item[] {
     return [item, ...(itemProperties[item]?.provides?.map((v) => v.item) ?? [])];
+  }
+
+  function onChangeFilterByType(ev: ChangeEvent<HTMLSelectElement>) {
+    switch (ev.target.value) {
+      case '':
+        return setFilterByType(undefined);
+      case 'none':
+        return setFilterByType(null);
+      default:
+        return setFilterByType(ev.target.value as ItemCategory);
+    }
+  }
+
+  function onChangeFilterProvides(ev: ChangeEvent<HTMLSelectElement>) {
+    return setFilterProvides(ev.target.value == '' ? undefined : (ev.target.value as Item));
+  }
+
+  function onChangeFilterUsedIn(ev: ChangeEvent<HTMLSelectElement>) {
+    switch (ev.target.value) {
+      case 'none':
+        return setFilterUsedIn(null);
+      case 'all':
+        return setFilterUsedIn(undefined);
+      default:
+        return setFilterUsedIn(ev.target.value as BuildingType);
+    }
+  }
+
+  function onChangeFilterProducedIn(ev: ChangeEvent<HTMLSelectElement>) {
+    switch (ev.target.value) {
+      case 'none':
+        return setFilterProducedIn(null);
+      case 'all':
+        return setFilterProducedIn(undefined);
+      default:
+        return setFilterProducedIn(ev.target.value as BuildingType);
+    }
   }
 
   const items = Object.values(Item)
@@ -153,22 +190,13 @@ function Items() {
         <tr>
           <th>
             <Form.Control
+              size="sm"
               placeholder="type to filter"
               onChange={(ev) => setFilterByName(ev.target.value != '' ? ev.target.value : null)}
             />
           </th>
           <th>
-            <Form.Select
-              onChange={(ev) =>
-                setFilterProducedIn(
-                  ev.target.value === 'none'
-                    ? null
-                    : ev.target.value === 'all'
-                      ? undefined
-                      : (ev.target.value as BuildingType),
-                )
-              }
-            >
+            <Form.Select size="sm" onChange={onChangeFilterProducedIn}>
               <option value="all">All</option>
               <option value="none">None</option>
               {Object.values(BuildingType).map((value) => (
@@ -179,17 +207,7 @@ function Items() {
             </Form.Select>
           </th>
           <th>
-            <Form.Select
-              onChange={(ev) =>
-                setFilterUsedIn(
-                  ev.target.value === 'none'
-                    ? null
-                    : ev.target.value === 'all'
-                      ? undefined
-                      : (ev.target.value as BuildingType),
-                )
-              }
-            >
+            <Form.Select size="sm" onChange={onChangeFilterUsedIn}>
               <option value="all">All</option>
               <option value="none">None</option>
               {Object.values(BuildingType).map((value) => (
@@ -200,9 +218,7 @@ function Items() {
             </Form.Select>
           </th>
           <th>
-            <Form.Select
-              onChange={(ev) => setFilterProvides(ev.target.value == '' ? undefined : (ev.target.value as Item))}
-            >
+            <Form.Select size="sm" onChange={onChangeFilterProvides}>
               <option value="">-</option>
               {Object.keys(providers).map((value) => (
                 <option key={value} value={value}>
@@ -216,17 +232,7 @@ function Items() {
           </th>
           <th></th>
           <th>
-            <Form.Select
-              onChange={(ev) =>
-                setFilterByType(
-                  ev.target.value == ''
-                    ? undefined
-                    : ev.target.value == 'none'
-                      ? null
-                      : (ev.target.value as ItemCategory),
-                )
-              }
-            >
+            <Form.Select size="sm" onChange={onChangeFilterByType}>
               <option value="">-</option>
               <option value="none">None</option>
               {Object.entries(ItemCategory).map(([key, value]) => (

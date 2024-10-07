@@ -133,30 +133,32 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
     return (
       <Card>
         <Card.Header>
-          <span onClick={() => setExpanded(!expanded)} className="cursor-pointer">
+          <button onClick={() => setExpanded(!expanded)} className="expander">
             <i
               className={
-                (isStorageBuildingData(building) ? 'bi-caret-right' : expanded ? 'bi-caret-down' : 'bi-caret-right') +
+                (!isStorageBuildingData(building) && expanded ? 'bi-caret-down' : 'bi-caret-right') +
                 ' building-expander'
               }
             />
             <BuildingIcon building={building.type} className="prefix-icon ms-2" />
             {building.type}
-          </span>
+          </button>
           {(isBuildingData(building) || isStorageBuildingData(building)) &&
             (buildingProps[building.type]?.tax?.length ?? 1) > 1 && (
               <ButtonGroup size="sm">
-                {buildingProps[building.type]?.tax?.map((_, index) => (
-                  <Button
-                    key={index}
-                    variant="secondary"
-                    onClick={() => onUpdate({ ...building, level: index } as BuildingData)}
-                    active={(building.level ?? 0) === index}
-                    className="py-0 border-0"
-                  >
-                    <RomanNumberIcon value={index + 1} className="inline-icon" alt={'Level ' + (index + 1)} />
-                  </Button>
-                ))}
+                {buildingProps[building.type]?.tax
+                  ?.map((_, i) => i)
+                  .map((index) => (
+                    <Button
+                      key={index}
+                      variant="secondary"
+                      onClick={() => onUpdate({ ...building, level: index } as BuildingData)}
+                      active={(building.level ?? 0) === index}
+                      className="py-0 border-0"
+                    >
+                      <RomanNumberIcon value={index + 1} className="inline-icon" alt={'Level ' + (index + 1)} />
+                    </Button>
+                  ))}
               </ButtonGroup>
             )}
           {titleContent}

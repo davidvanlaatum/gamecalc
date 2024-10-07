@@ -1,17 +1,23 @@
-import React, { createContext, ReactNode, useContext } from 'react';
+import React, { createContext, ReactNode, useContext, useMemo } from 'react';
 import useLocalStorage from '../useLocalstorage.ts';
 import { Alert } from 'react-bootstrap';
+import { v4 as uuid } from 'uuid';
 
 interface Alerts {
   addAlert: (message: string) => void;
   addAlerts: (messages: string[]) => void;
 }
 
-class AlertsImpl implements Alerts {
-  private readonly alertData: string[];
-  private readonly setAlertData: (value: string[]) => void;
+interface AlertData {
+  id: string;
+  message: string;
+}
 
-  constructor(alertData: string[], setAlertData: (value: string[]) => void) {
+class AlertsImpl implements Alerts {
+  private readonly alertData: AlertData[];
+  private readonly setAlertData: (value: AlertData[]) => void;
+
+  constructor(alertData: AlertData[], setAlertData: (value: AlertData[]) => void) {
     this.alertData = alertData;
     this.setAlertData = setAlertData;
   }
@@ -23,8 +29,8 @@ class AlertsImpl implements Alerts {
   addAlerts(messages: string[]) {
     const newAlerts = [...this.alertData];
     messages.forEach((message) => {
-      if (!newAlerts.includes(message)) {
-        newAlerts.push(message);
+      if (!newAlerts.find((v) => v.message == message)) {
+        newAlerts.push({ message, id: uuid() });
       } else {
         console.debug('Alert already exists:', message);
       }
@@ -40,19 +46,19 @@ interface AlertsProviderProps {
 const SharedObjectContext = createContext<Alerts | undefined>(undefined);
 
 export const AlertsProvider: React.FC<AlertsProviderProps> = ({ children }) => {
-  const [alertData, setAlertData] = useLocalStorage<string[]>('alerts', []);
-  const alerts = new AlertsImpl(alertData, setAlertData);
+  const [alertData, setAlertData] = useLocalStorage<AlertData[]>('alerts', []);
+  const alerts = useMemo(() => new AlertsImpl(alertData, setAlertData), [alertData, setAlertData]);
 
   return (
     <>
-      {alertData.map((message, index) => (
+      {alertData.map((data) => (
         <Alert
-          key={index}
+          key={data.id}
           variant="info"
           dismissible
-          onClose={() => setAlertData([...alertData.filter((_, i) => i != index)])}
+          onClose={() => setAlertData([...alertData.filter((v) => v.id != data.id)])}
         >
-          {message}
+          {data.message}
         </Alert>
       ))}
       <SharedObjectContext.Provider value={alerts}>{children}</SharedObjectContext.Provider>

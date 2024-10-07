@@ -38,6 +38,7 @@ jobs:
         if: always()
       - name: Upload coverage as artifact
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: coverage
           path: coverage/
@@ -54,6 +55,7 @@ jobs:
         if: always()
       - name: Upload badge as artifact
         uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: badge
           path: ./badges/test-coverage.svg

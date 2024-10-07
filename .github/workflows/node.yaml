@@ -29,11 +29,6 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm test
-      - name: Test Summary
-        uses: test-summary/action@v2
-        with:
-          paths: "junit.xml"
-        if: always()
       - name: Check test coverage
         uses: johanvanhelden/gha-clover-test-coverage-check@v1
         id: coverage
@@ -41,6 +36,11 @@ jobs:
           percentage: "50"
           filename: "coverage/clover.xml"
         if: always()
+      - name: Upload coverage as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage/
       - run: mkdir -p ./badges
         if: always()
       - name: Generate the badge SVG image
@@ -51,4 +51,15 @@ jobs:
           status: ${{ steps.coverage.outputs.coverage }}
           path: ./badges/test-coverage.svg
           color: ${{ steps.coverage.outputs.coveragelines > 75 && 'green' || 'red' }}
+        if: always()
+      - name: Upload badge as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: badge
+          path: ./badges/test-coverage.svg
+          if-no-files-found: error
+      - name: Test Summary
+        uses: test-summary/action@v2
+        with:
+          paths: "junit.xml"
         if: always()

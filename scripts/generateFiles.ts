@@ -30,7 +30,7 @@ async function writeSourceFile(filePath: string, content: string) {
   // Format the content using Prettier
   const formattedContent = await prettier.format(content, {
     ...prettierConfig,
-    parser: 'typescript',
+    parser: path.extname(filePath) == '.ts' ? 'typescript' : 'json',
   });
 
   // Read the existing file content
@@ -39,9 +39,9 @@ async function writeSourceFile(filePath: string, content: string) {
   // Write the formatted content back to the file only if it has changed
   if (existingContent !== formattedContent) {
     await fs.promises.writeFile(filePath, formattedContent, 'utf8');
-    console.log('File written:', path.relative(__dirname, filePath));
+    console.log('File written:', path.relative(path.dirname(__dirname), filePath));
   } else {
-    console.log('No changes detected, file not written:', path.relative(__dirname, filePath));
+    console.log('No changes detected, file not written:', path.relative(path.dirname(__dirname), filePath));
   }
 }
 
@@ -243,4 +243,22 @@ async function generateRecipes() {
   );
 }
 
-await Promise.all([generateIcons(), generateRecipes()]);
+async function setVersion() {
+  const version = {
+    commit: process.env.GITHUB_SHA ?? 'dev',
+    version: process.env.npm_package_version ?? 'dev',
+  };
+  console.log(`version is ${version.version}-${version.commit}`);
+  await writeSourceFile(
+    path.join(srcDir, 'version.ts'),
+    `
+  export interface AppVersion {
+    commit: string;
+    version: string;
+  }
+  export const version: AppVersion = ${JSON.stringify(version)};`,
+  );
+  await writeSourceFile(path.join(__dirname, '..', 'public', 'version.json'), JSON.stringify(version));
+}
+
+await Promise.all([generateIcons(), generateRecipes(), setVersion()]);

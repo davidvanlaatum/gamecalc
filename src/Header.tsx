@@ -19,7 +19,7 @@ function Header() {
       const res = await fetch(`${basename}version.json`, { cache: 'no-cache' });
       if (res.status == 200) {
         const data = (await res.json()) as AppVersion;
-        if (typeof data == 'object' && data.version != version.version && data.commit != version.commit) {
+        if (typeof data == 'object' && (data.version != version.version || data.commit != version.commit)) {
           window.location.reload();
         }
         setLastVersionCheck(new Date());

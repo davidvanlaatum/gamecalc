@@ -3,6 +3,7 @@ import {
   BuildingOrField,
   BuildingSubTypes,
   BuildingType,
+  DevelopmentStage,
   isHouseData,
   Item,
   MedievalDynastyCalculator,
@@ -118,8 +119,8 @@ function Calculator() {
             <Row>
               <Col>{buildingCount} buildings</Col>
               <Col className="text-end">
-                <span onClick={() => expandAll()} className="bi-folder-plus cursor-pointer m-1"></span>
-                <span onClick={() => collapseAll()} className="bi-folder-minus cursor-pointer m-1"></span>
+                <button onClick={() => expandAll()} className="bi-folder-plus expander m-1"></button>
+                <button onClick={() => collapseAll()} className="bi-folder-minus expander m-1"></button>
               </Col>
             </Row>
             {data.buildings?.map((building, index) => (
@@ -135,6 +136,7 @@ function Calculator() {
                 inspiringSpeech={calc.inspiringSpeech}
                 daysPerSeason={calc.daysPerSeason}
                 taxPercent={calc.taxPercent}
+                developmentStage={data.developmentStage ?? DevelopmentStage.Traveler}
                 ref={addToBuildings}
               />
             ))}

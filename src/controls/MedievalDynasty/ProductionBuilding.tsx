@@ -1,4 +1,11 @@
-import { BuildingCalculator, BuildingData, buildingProps, Item, RecipeId } from '@/data/MedievalDynasty';
+import {
+  BuildingCalculator,
+  BuildingData,
+  buildingProps,
+  DevelopmentStage,
+  Item,
+  RecipeId,
+} from '@/data/MedievalDynasty';
 import { FC, ReactNode, useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import Row from 'react-bootstrap/Row';
@@ -8,6 +15,7 @@ import { Dropdown, InputGroup } from 'react-bootstrap';
 import InputGroupText from 'react-bootstrap/InputGroupText';
 import BuildingProductionRow from './BuildingProductionRow.tsx';
 import ItemIcon from './ItemIcon.tsx';
+import BuildingTax from '@/controls/MedievalDynasty/BuildingTax.tsx';
 
 interface ProductionBuildingProps {
   building: BuildingData;
@@ -15,6 +23,7 @@ interface ProductionBuildingProps {
   inspiringSpeech: number;
   taxPercent: number;
   daysPerSeason: number;
+  developmentStage: DevelopmentStage;
   setTitleContent: (content: ReactNode) => void;
 }
 
@@ -24,17 +33,14 @@ const ProductionBuilding: FC<ProductionBuildingProps> = ({
   inspiringSpeech,
   taxPercent,
   daysPerSeason,
+  developmentStage,
   setTitleContent,
 }) => {
   const calc = new BuildingCalculator(building, inspiringSpeech, taxPercent, daysPerSeason);
 
   useEffect(() => {
-    setTitleContent(
-      <span className="ps-2">
-        {calc.tax} <ItemIcon item={Item.Coin} className="suffix-icon" />
-      </span>,
-    );
-  }, [calc.tax, setTitleContent]);
+    setTitleContent(<BuildingTax tax={calc.tax} developmentStage={developmentStage} />);
+  }, [calc.tax, developmentStage, setTitleContent]);
 
   function setProduction(recipe: RecipeId, value: number) {
     onUpdate({

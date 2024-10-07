@@ -1,24 +1,26 @@
 import { FC, ReactNode, useEffect } from 'react';
-import { Item, StorageBuildingCalculator, StorageBuildingData } from '@/data/MedievalDynasty';
-import ItemIcon from '@/controls/MedievalDynasty/ItemIcon.tsx';
+import { DevelopmentStage, StorageBuildingCalculator, StorageBuildingData } from '@/data/MedievalDynasty';
+import BuildingTax from '@/controls/MedievalDynasty/BuildingTax.tsx';
 
 interface BuildingStorageProps {
   data: StorageBuildingData;
-  onUpdate: (updatedBuilding: StorageBuildingData) => void;
   taxPercent: number;
   daysPerSeason: number;
+  developmentStage: DevelopmentStage;
   setTitleContent: (content: ReactNode) => void;
 }
 
-const BuildingStorage: FC<BuildingStorageProps> = ({ data, taxPercent, daysPerSeason, setTitleContent }) => {
+const BuildingStorage: FC<BuildingStorageProps> = ({
+  data,
+  taxPercent,
+  daysPerSeason,
+  developmentStage,
+  setTitleContent,
+}) => {
   const calc = new StorageBuildingCalculator(data, taxPercent, daysPerSeason);
   useEffect(() => {
-    setTitleContent(
-      <span className="ps-2">
-        {calc.tax} <ItemIcon item={Item.Coin} className="suffix-icon" />
-      </span>,
-    );
-  }, [calc.tax, setTitleContent]);
+    setTitleContent(<BuildingTax tax={calc.tax} developmentStage={developmentStage} />);
+  }, [calc.tax, developmentStage, setTitleContent]);
 
   return <></>;
 };

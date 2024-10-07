@@ -1,30 +1,36 @@
 import { FC, ReactNode, useEffect } from 'react';
-import { HouseCalculator, HouseData, Item } from '@/data/MedievalDynasty';
+import { DevelopmentStage, HouseCalculator, HouseData } from '@/data/MedievalDynasty';
 import { Form, InputGroup } from 'react-bootstrap';
 import InputGroupText from 'react-bootstrap/InputGroupText';
-import ItemIcon from './ItemIcon.tsx';
+import BuildingTax from '@/controls/MedievalDynasty/BuildingTax.tsx';
 
 export interface BuildingHouseProps {
   data: HouseData;
   onUpdate: (updatedBuilding: HouseData) => void;
   taxPercent: number;
   daysPerSeason: number;
+  developmentStage: DevelopmentStage;
   setTitleContent: (content: ReactNode) => void;
 }
 
-const BuildingHouse: FC<BuildingHouseProps> = ({ data, onUpdate, taxPercent, daysPerSeason, setTitleContent }) => {
+const BuildingHouse: FC<BuildingHouseProps> = ({
+  data,
+  onUpdate,
+  taxPercent,
+  daysPerSeason,
+  developmentStage,
+  setTitleContent,
+}) => {
   const calc = new HouseCalculator(data, taxPercent, daysPerSeason);
 
   useEffect(() => {
     setTitleContent(
       <>
         {calc.count > 1 ? ` x ${calc.count} ` : ''}
-        <span className="ps-2">
-          {calc.tax} <ItemIcon item={Item.Coin} className="suffix-icon" />
-        </span>
+        <BuildingTax tax={calc.tax} developmentStage={developmentStage} />
       </>,
     );
-  }, [calc.count, calc.tax, setTitleContent]);
+  }, [calc.count, calc.tax, developmentStage, setTitleContent]);
 
   return (
     <InputGroup>

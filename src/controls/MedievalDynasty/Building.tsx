@@ -3,6 +3,7 @@ import {
   BuildingData,
   buildingProps,
   BuildingSubTypes,
+  DevelopmentStage,
   isBuildingData,
   isFieldData,
   isHouseData,
@@ -31,6 +32,7 @@ interface BuildingProps {
   inspiringSpeech: number;
   daysPerSeason: number;
   taxPercent: number;
+  developmentStage: DevelopmentStage;
 }
 
 export interface BuildingRef {
@@ -51,6 +53,7 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
       inspiringSpeech,
       daysPerSeason,
       taxPercent,
+      developmentStage,
     },
     ref,
   ) => {
@@ -78,6 +81,7 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
                 inspiringSpeech={inspiringSpeech}
                 daysPerSeason={daysPerSeason}
                 taxPercent={taxPercent}
+                developmentStage={developmentStage}
                 setTitleContent={setTitleContent}
               />
             );
@@ -88,6 +92,7 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
                 onUpdate={onUpdate}
                 taxPercent={taxPercent}
                 daysPerSeason={daysPerSeason}
+                developmentStage={developmentStage}
                 setTitleContent={setTitleContent}
               />
             );
@@ -99,6 +104,7 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
                 inspiringSpeech={inspiringSpeech}
                 taxPercent={taxPercent}
                 daysPerSeason={daysPerSeason}
+                developmentStage={developmentStage}
                 setTitleContent={setTitleContent}
               />
             );
@@ -110,6 +116,7 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
                 taxPercent={taxPercent}
                 inspiringSpeech={inspiringSpeech}
                 daysPerSeason={daysPerSeason}
+                developmentStage={developmentStage}
                 setTitleContent={setTitleContent}
               />
             );
@@ -117,9 +124,9 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
             return (
               <BuildingStorage
                 data={building}
-                onUpdate={onUpdate}
                 taxPercent={taxPercent}
                 daysPerSeason={daysPerSeason}
+                developmentStage={developmentStage}
                 setTitleContent={setTitleContent}
               />
             );
@@ -128,7 +135,7 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
         }
       };
       setInner(getInner());
-    }, [building, daysPerSeason, inspiringSpeech, onUpdate, taxPercent]);
+    }, [building, daysPerSeason, developmentStage, inspiringSpeech, onUpdate, taxPercent]);
 
     return (
       <Card>

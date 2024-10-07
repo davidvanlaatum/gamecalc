@@ -1,8 +1,9 @@
 import { FC, ReactNode, useEffect } from 'react';
-import { FieldCalculator, FieldData, Item, RecipeId } from '@/data/MedievalDynasty';
+import { DevelopmentStage, FieldCalculator, FieldData, Item, RecipeId } from '@/data/MedievalDynasty';
 import { Col, Dropdown, Row } from 'react-bootstrap';
 import FieldProductionRow from './FieldProductionRow.tsx';
 import ItemIcon from './ItemIcon.tsx';
+import BuildingTax from '@/controls/MedievalDynasty/BuildingTax.tsx';
 
 export interface FieldProps {
   field: FieldData;
@@ -10,19 +11,24 @@ export interface FieldProps {
   onUpdate: (updatedBuilding: FieldData) => void;
   inspiringSpeech: number;
   taxPercent: number;
+  developmentStage: DevelopmentStage;
   setTitleContent: (content: ReactNode) => void;
 }
 
-const Field: FC<FieldProps> = ({ field, onUpdate, daysPerSeason, inspiringSpeech, taxPercent, setTitleContent }) => {
+const Field: FC<FieldProps> = ({
+  field,
+  onUpdate,
+  daysPerSeason,
+  inspiringSpeech,
+  taxPercent,
+  developmentStage,
+  setTitleContent,
+}) => {
   const calc = new FieldCalculator(field, daysPerSeason, inspiringSpeech, taxPercent);
 
   useEffect(() => {
-    setTitleContent(
-      <span className="ps-2">
-        {calc.tax} <ItemIcon item={Item.Coin} className="suffix-icon" />
-      </span>,
-    );
-  }, [calc.tax, setTitleContent]);
+    setTitleContent(<BuildingTax tax={calc.tax} developmentStage={developmentStage} />);
+  }, [calc.tax, developmentStage, setTitleContent]);
 
   function setProduction(recipe: RecipeId, value: number) {
     onUpdate({

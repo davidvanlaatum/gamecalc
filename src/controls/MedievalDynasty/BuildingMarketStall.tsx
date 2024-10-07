@@ -2,10 +2,18 @@ import { FC, ReactNode, useEffect } from 'react';
 import { Dropdown, Form, InputGroup, Row } from 'react-bootstrap';
 import InputGroupText from 'react-bootstrap/InputGroupText';
 import ItemIcon from './ItemIcon.tsx';
-import { Item, ItemCategory, MarketStallCalculator, MarketStallData, SkillType } from '@/data/MedievalDynasty';
+import {
+  DevelopmentStage,
+  Item,
+  ItemCategory,
+  MarketStallCalculator,
+  MarketStallData,
+  SkillType,
+} from '@/data/MedievalDynasty';
 import SkillIcon from './SkillIcon.tsx';
 import { v4 as uuid } from 'uuid';
 import MarketStallSellRow from './MarketStallSellRow.tsx';
+import BuildingTax from '@/controls/MedievalDynasty/BuildingTax.tsx';
 
 interface BuildingStallProps {
   data: MarketStallData;
@@ -13,6 +21,7 @@ interface BuildingStallProps {
   taxPercent: number;
   inspiringSpeech: number;
   daysPerSeason: number;
+  developmentStage: DevelopmentStage;
   setTitleContent: (content: ReactNode) => void;
 }
 
@@ -22,6 +31,7 @@ const BuildingMarketStall: FC<BuildingStallProps> = ({
   taxPercent,
   inspiringSpeech,
   daysPerSeason,
+  developmentStage,
   setTitleContent,
 }) => {
   const calc = new MarketStallCalculator(data, taxPercent, inspiringSpeech, daysPerSeason);
@@ -51,12 +61,10 @@ const BuildingMarketStall: FC<BuildingStallProps> = ({
               </option>
             ))}
         </Form.Select>
-        <span className="ps-2">
-          {calc.tax} <ItemIcon item={Item.Coin} className="suffix-icon" />
-        </span>
+        <BuildingTax tax={calc.tax} developmentStage={developmentStage} />
       </>,
     );
-  }, [calc.tax, data, onUpdate, setTitleContent]);
+  }, [calc.tax, data, developmentStage, onUpdate, setTitleContent]);
   const skillId = uuid();
 
   function setProduction(item: Item, value: number) {

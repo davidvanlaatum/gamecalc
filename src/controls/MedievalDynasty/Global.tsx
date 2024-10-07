@@ -1,9 +1,9 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import {
   DevelopmentStage,
   developmentStageProps,
-  isHouseData,
   Item,
+  MedievalDynastyCalculator,
   MedievalDynastyData,
 } from '@/data/MedievalDynasty';
 import Form from 'react-bootstrap/Form';
@@ -20,33 +20,7 @@ export interface GlobalProps {
 }
 
 const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
-  const [buildingCount, setBuildingCount] = useState<number>(0);
-
-  useEffect(() => {
-    const n =
-      data.buildings
-        ?.map((building) => (isHouseData(building) ? (building.count ?? 1) : 1))
-        .reduce((a, b) => a + b, 0) ?? 0;
-    if (n !== buildingCount) {
-      setBuildingCount(n);
-    }
-  }, [buildingCount, data.buildings]);
-
-  useEffect(() => {
-    if (
-      buildingCount > 0 &&
-      buildingCount > developmentStageProps[data.developmentStage ?? DevelopmentStage.Traveler].buildingLimit
-    ) {
-      onUpdate({
-        ...data,
-        developmentStage: Object.entries(developmentStageProps)
-          .filter(([, p]) => p.buildingLimit >= buildingCount)
-          .map(([key]) => key as DevelopmentStage)
-          .find((v) => v),
-      });
-    }
-  }, [buildingCount, data, onUpdate]);
-
+  const calc = new MedievalDynastyCalculator(data);
   return (
     <>
       <Row>
@@ -156,7 +130,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
             onChange={(ev) => onUpdate({ ...data, developmentStage: ev.target.value as DevelopmentStage })}
           >
             {Object.entries(DevelopmentStage).map(([key, value]) => (
-              <option key={key} value={key} disabled={buildingCount > developmentStageProps[value].buildingLimit}>
+              <option key={key} value={key} disabled={!calc.availableDevelopmentStages.includes(value)}>
                 {value} ({developmentStageProps[value].buildingLimit})
               </option>
             ))}

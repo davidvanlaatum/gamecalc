@@ -29,6 +29,8 @@ export enum BuildingType {
   Windmill = 'Windmill',
   ResourceStorage = 'ResourceStorage',
   BuildersHut = 'BuildersHut',
+  Field = 'Field',
+  Orchard = 'Orchard',
 }
 
 export enum SkillType {
@@ -107,4 +109,6 @@ export const buildingProps: Record<BuildingType, BuildingProps> = {
   [BuildingType.Windmill]: {},
   [BuildingType.ResourceStorage]: { tax: [1, 2, 3] },
   [BuildingType.BuildersHut]: {},
+  [BuildingType.Field]: { skill: SkillType.Farming, tax: [0.2] },
+  [BuildingType.Orchard]: { skill: SkillType.Farming, tax: [0.8] },
 };

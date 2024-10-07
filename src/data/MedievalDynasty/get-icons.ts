@@ -50,6 +50,8 @@ const buildingIcons: Record<BuildingType, string> = {
   [BuildingType.Windmill]: icons['../../assets/MedievalDynasty/Buildings/T_Icon_Windmill.png'],
   [BuildingType.ResourceStorage]: icons['../../assets/MedievalDynasty/Buildings/T_Icon_ResourceStorage.png'],
   [BuildingType.BuildersHut]: icons['../../assets/MedievalDynasty/Buildings/T_Icon_BuildersHut.png'],
+  [BuildingType.Field]: icons['../../assets/MedievalDynasty/Buildings/Wheel_Icon_Field.png'],
+  [BuildingType.Orchard]: icons['../../assets/MedievalDynasty/Buildings/Wheel_Icon_Orchard.png'],
 };
 
 export function getBuildingIcon(building: BuildingType) {

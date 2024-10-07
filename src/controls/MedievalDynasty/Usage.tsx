@@ -22,10 +22,10 @@ const Usage: FC<UsageProps> = ({ usage }) => {
         <PopoverBody className="pb-0">
           <Table striped={true}>
             <tbody>
-              {item.log
+              {[...item.log]
                 .sort((a, b) => a.amount - b.amount)
-                .map((log, index) => (
-                  <tr key={index}>
+                .map((log) => (
+                  <tr key={log.log}>
                     <td>
                       {log.log}
                       {log.count > 1 && ` x ${log.count}`}
@@ -63,7 +63,7 @@ const Usage: FC<UsageProps> = ({ usage }) => {
           <tbody>
             {data.map((item) => (
               <tr key={item.item}>
-                <ItemDetailsPopup item={item.item}>
+                <ItemDetailsPopup item={item.item} placement="auto">
                   <td>
                     <ItemIcon item={item.item} className="prefix-icon" />
                     {item.item}

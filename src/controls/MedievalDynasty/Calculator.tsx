@@ -4,7 +4,6 @@ import {
   BuildingSubTypes,
   BuildingType,
   DevelopmentStage,
-  isHouseData,
   Item,
   MedievalDynastyCalculator,
   MedievalDynastyData,
@@ -17,17 +16,17 @@ import { Accordion, AccordionBody, AccordionHeader, AccordionItem, Card, Dropdow
 import { v4 as uuid } from 'uuid';
 import Usage from './Usage.tsx';
 import AllowConsume from './AllowConsume.tsx';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useAlerts } from '../Alerts.tsx';
 import BuildingIcon from './BuildingIcon.tsx';
 import ItemIcon from './ItemIcon.tsx';
 
 function Calculator() {
   const [data, setData] = useLocalStorage<MedievalDynastyData>('medieval_dynasty', {});
-  const calc = new MedievalDynastyCalculator(data);
+  const calc = useMemo(() => new MedievalDynastyCalculator(data), [data]);
   const alerts = useAlerts();
   const buildingRefs = useRef<(BuildingRef | null)[]>([]);
-  const [buildingCount, setBuildingCount] = useState<number>();
+  const [buildingCounts, setBuildingCounts] = useState<string[]>([]);
 
   useEffect(() => {
     const log: string[] = [];
@@ -107,8 +106,12 @@ function Calculator() {
   }
 
   useEffect(() => {
-    setBuildingCount(data.buildings?.map((v) => (isHouseData(v) ? v.count : 1) ?? 1).reduce((a, b) => a + b, 0));
-  }, [data.buildings]);
+    setBuildingCounts(
+      [`${calc.buildingCount} buildings`, `${calc.fieldCount} fields`, `${calc.orchardCount} orchards`].filter((s) =>
+        s.startsWith('0'),
+      ),
+    );
+  }, [calc.buildingCount, calc.fieldCount, calc.orchardCount]);
 
   return (
     <Row>
@@ -117,7 +120,7 @@ function Calculator() {
           <Card.Body>
             <Global data={data} onUpdate={setData} />
             <Row>
-              <Col>{buildingCount} buildings</Col>
+              <Col>{buildingCounts.join(', ')}</Col>
               <Col className="text-end">
                 <button onClick={() => expandAll()} className="bi-folder-plus expander m-1"></button>
                 <button onClick={() => collapseAll()} className="bi-folder-minus expander m-1"></button>

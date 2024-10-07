@@ -96,6 +96,7 @@ async function generateIcons() {
     [Item.FlatStrawHat]: 'StrawHatFlat',
     [Item.HatwithLapels]: 'Hat_A',
     [Item.Hop]: 'Hops',
+    [Item.HopSeedling]: 'HopPlantSeedling',
     [Item.Hose]: 'Hose_A',
     [Item.IronCrossbow]: 'Crossbow',
     [Item.IronSpear]: 'IronPike',

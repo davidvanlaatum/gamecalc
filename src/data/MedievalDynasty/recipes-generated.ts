@@ -85,4 +85,9 @@ export enum Recipe {
   LinenThread = 'linenThread',
   BronzeScythe = 'bronzeScythe',
   IronScythe = 'ironScythe',
+  Apple = 'apple',
+  Pear = 'pear',
+  Plum = 'plum',
+  Cherry = 'cherry',
+  Hop = 'hop',
 }

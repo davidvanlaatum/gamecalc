@@ -8,6 +8,11 @@ interface BuildingTaxProps {
   developmentStage: DevelopmentStage;
 }
 
+const numberFormat = new Intl.NumberFormat('en-US', {
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 2,
+});
+
 const BuildingTax: FC<BuildingTaxProps> = ({ tax, developmentStage }) => {
   const baseTax = tax / developmentStageProps[developmentStage].taxMultiplier;
 
@@ -22,7 +27,8 @@ const BuildingTax: FC<BuildingTaxProps> = ({ tax, developmentStage }) => {
                 <tr key={key}>
                   <td>{key}</td>
                   <td className="number">
-                    {baseTax * value.taxMultiplier} <ItemIcon item={Item.Coin} className="suffix-icon" />{' '}
+                    {numberFormat.format(baseTax * value.taxMultiplier)}{' '}
+                    <ItemIcon item={Item.Coin} className="suffix-icon" />{' '}
                   </td>
                 </tr>
               ))}
@@ -35,7 +41,7 @@ const BuildingTax: FC<BuildingTaxProps> = ({ tax, developmentStage }) => {
   return (
     <OverlayTrigger overlay={popover} placement="auto">
       <span className="ps-2">
-        {tax} <ItemIcon item={Item.Coin} className="suffix-icon" />
+        {numberFormat.format(tax)} <ItemIcon item={Item.Coin} className="suffix-icon" />
       </span>
     </OverlayTrigger>
   );

@@ -522,7 +522,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   carrot: {
     name: 'Carrot',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -538,7 +538,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   onion: {
     name: 'Onion',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -554,7 +554,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   beetroot: {
     name: 'Beetroot',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -570,7 +570,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   cabbage: {
     name: 'Cabbage',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -586,7 +586,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   wheat: {
     name: 'Wheat',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -614,7 +614,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   oat: {
     name: 'Oat',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -642,7 +642,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   rye: {
     name: 'Rye',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -670,7 +670,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   flax: {
     name: 'Flax',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -698,7 +698,7 @@ export const recipes: Record<Recipe, RecipeData> = {
   },
   poppy: {
     name: 'Poppy',
-    building: BuildingType.FarmShed,
+    building: BuildingType.Field,
     skillMultiplier: null,
     skillSamples: null,
     ingredients: {
@@ -1112,6 +1112,56 @@ export const recipes: Record<Recipe, RecipeData> = {
     },
     production: {
       [Item.IronScythe]: 1,
+    },
+  },
+  apple: {
+    name: 'Apple',
+    building: BuildingType.Orchard,
+    skillMultiplier: null,
+    skillSamples: null,
+    ingredients: {},
+    production: {
+      [Item.Apple]: 0.001, // TODO ?
+    },
+  },
+  pear: {
+    name: 'Pear',
+    building: BuildingType.Orchard,
+    skillMultiplier: null,
+    skillSamples: null,
+    ingredients: {},
+    production: {
+      [Item.Pear]: 0.001, // TODO ?
+    },
+  },
+  plum: {
+    name: 'Plum',
+    building: BuildingType.Orchard,
+    skillMultiplier: null,
+    skillSamples: null,
+    ingredients: {},
+    production: {
+      [Item.Plum]: 0.001, // TODO ?
+    },
+  },
+  cherry: {
+    name: 'Cherry',
+    building: BuildingType.Orchard,
+    skillMultiplier: null,
+    skillSamples: null,
+    ingredients: {},
+    production: {
+      [Item.Cherry]: 0.001, // TODO ?
+    },
+  },
+  hop: {
+    name: 'Hop',
+    building: BuildingType.Orchard,
+    skillMultiplier: null,
+    skillSamples: null,
+    ingredients: {},
+    production: {
+      [Item.Hop]: 0.001, // TODO ?
     },
   },
 };

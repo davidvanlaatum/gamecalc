@@ -22,7 +22,11 @@ export interface BuildingOrField {
   type: BuildingType;
 }
 
-const allowedStorageBuildingTypes: BuildingType[] = [BuildingType.FoodStorage, BuildingType.ResourceStorage];
+const allowedStorageBuildingTypes: BuildingType[] = [
+  BuildingType.FoodStorage,
+  BuildingType.ResourceStorage,
+  BuildingType.FarmShed,
+];
 
 export interface StorageBuildingData extends BuildingOrField {
   type: (typeof allowedStorageBuildingTypes)[number];
@@ -45,12 +49,12 @@ export function isBuildingData(data: BuildingOrField): data is BuildingData {
 }
 
 export interface FieldData extends BuildingOrField {
-  type: BuildingType.FarmShed;
+  type: BuildingType.Field | BuildingType.Orchard;
   size?: Partial<Record<RecipeId, number>>;
 }
 
 export function isFieldData(data: BuildingOrField): data is FieldData {
-  return data.type === BuildingType.FarmShed;
+  return data.type === BuildingType.Field || data.type === BuildingType.Orchard;
 }
 
 export interface HouseData extends BuildingOrField {
@@ -226,17 +230,31 @@ export class MedievalDynastyCalculator {
         );
       });
 
+    let developmentStage = this.developmentStage;
+    const availableDevelopmentStages = this.availableDevelopmentStages;
+    if (!availableDevelopmentStages.includes(developmentStage)) {
+      developmentStage = availableDevelopmentStages[0];
+      log.push(`development stage updated to ${developmentStage}`);
+    }
+
     return {
       ...this.data,
+      developmentStage: developmentStage,
       buildings: newBuildings,
     };
   }
 
+  get availableDevelopmentStages(): DevelopmentStage[] {
+    const buildingCount = this.buildingCount;
+    return Object.values(DevelopmentStage).filter((v) => developmentStageProps[v].buildingLimit >= buildingCount);
+  }
+
+  get developmentStage(): DevelopmentStage {
+    return this.data.developmentStage ?? DevelopmentStage.Traveler;
+  }
+
   get taxPercent(): number {
-    return (
-      ((this.data.taxPercent ?? 100) / 100) *
-      (developmentStageProps[this.data.developmentStage ?? DevelopmentStage.Traveler].taxMultiplier ?? 1)
-    );
+    return ((this.data.taxPercent ?? 100) / 100) * developmentStageProps[this.developmentStage].taxMultiplier;
   }
 
   get daysPerSeason(): number {
@@ -245,6 +263,20 @@ export class MedievalDynastyCalculator {
 
   get inspiringSpeech(): number {
     return this.data.inspiringSpeech ?? 0;
+  }
+
+  get buildingCount(): number {
+    return this.buildings
+      .filter((v) => v.type != BuildingType.Field && v.type != BuildingType.Orchard)
+      .reduce((acc, v) => acc + v.count, 0);
+  }
+
+  get fieldCount(): number {
+    return this.buildings.filter((v) => v.type == BuildingType.Field).reduce((acc, v) => acc + v.count, 0);
+  }
+
+  get orchardCount(): number {
+    return this.buildings.filter((v) => v.type == BuildingType.Orchard).reduce((acc, v) => acc + v.count, 0);
   }
 
   get buildings(): (
@@ -461,8 +493,12 @@ export class FieldCalculator extends AbstractProductionBuilding {
     return 0;
   }
 
+  get count(): number {
+    return Object.values(this.data.size ?? {}).reduce((acc, v) => acc + (v ?? 0), 0) ?? 0;
+  }
+
   get tax(): number {
-    return super.tax + 1000; // todo
+    return super.tax * this.count;
   }
 
   fixErrors(log: string[]): FieldData {
@@ -483,12 +519,12 @@ export class FieldCalculator extends AbstractProductionBuilding {
   }
 
   get type() {
-    return BuildingType.FarmShed;
+    return this.data.type;
   }
 
   get possibleRecipes(): [RecipeId, RecipeData][] {
     return (Object.entries(recipes) as [RecipeId, RecipeData][]).filter(
-      ([, recipe]) => recipe.building === BuildingType.FarmShed,
+      ([, recipe]) => recipe.building === this.data.type,
     );
   }
 

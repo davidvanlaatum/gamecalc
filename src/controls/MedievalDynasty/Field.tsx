@@ -53,13 +53,6 @@ const Field: FC<FieldProps> = ({
 
   return (
     <>
-      <Row>
-        <Col></Col>
-        <Col sm={3} className="number">
-          {calc.production.reduce((t, c) => t + c.size, 0)}
-        </Col>
-        <Col sm={3}></Col>
-      </Row>
       {calc.production
         .sort((a, b) => a.name.localeCompare(b.name))
         .map((recipe) => (
@@ -67,6 +60,13 @@ const Field: FC<FieldProps> = ({
             <FieldProductionRow recipe={recipe} onUpdate={setProduction} onRemove={removeProduction} />
           </Row>
         ))}
+      <Row>
+        <Col></Col>
+        <Col sm={3}>
+          <div className="form-control number">{calc.count}</div>
+        </Col>
+        <Col sm={3}></Col>
+      </Row>
       <Row>
         <Dropdown>
           <Dropdown.Toggle variant="secondary" disabled={calc.availableRecipes.length == 0}>

@@ -56,7 +56,9 @@ function Header() {
               <img alt="logo" src={`${basename}T_GameSymbol.png`} style={{ height: '1em' }} /> Medieval Dynasty
             </Nav.Link>
           </Nav>
-          <Navbar.Text className="me-2">Version: {version.version + '-' + version.commit.substring(0, 8)}</Navbar.Text>
+          <Navbar.Text className="me-2" title={`last checked for update at ${lastVersionCheck?.toString()}`}>
+            Version: {version.version + '-' + version.commit.substring(0, 8)}
+          </Navbar.Text>
         </Navbar.Collapse>
       </Navbar>
       <Container>

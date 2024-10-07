@@ -1,10 +1,10 @@
 import { Item } from './items';
 
-export const icons = import.meta.glob('../../assets/MedievalDynasty/**/*.png', {
+export const icons: Record<string, string> = import.meta.glob('../../assets/MedievalDynasty/**/*.png', {
   import: 'default',
   eager: true,
-}) as Record<string, () => Promise<string>>;
-export const itemIcons: Record<Item, (() => Promise<string>) | string> = {
+});
+export const itemIcons: Record<Item, string> = {
   [Item.AnimalFeed]: icons['../../assets/MedievalDynasty/ItemsIcons/T_Icon_AnimalFeed.png'],
   [Item.Apple]: icons['../../assets/MedievalDynasty/ItemsIcons/T_Icon_Apple.png'],
   [Item.AppleJuice]: icons['../../assets/MedievalDynasty/ItemsIcons/T_Icon_WineBottle.png'],

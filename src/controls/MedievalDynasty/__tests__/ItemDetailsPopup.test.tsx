@@ -25,8 +25,9 @@ describe('ItemDetailsPopup', () => {
         const popup = (await waitFor(() => getByRole(baseElement, 'tooltip'))).getElementsByTagName('table').item(0)!;
         expect(popup).toBeInTheDocument();
         await waitFor(async () => {
+          // eslint-disable-next-line @typescript-eslint/require-await
           await act(async () => {
-            const expectedIcon = await getItemIcon(item);
+            const expectedIcon = getItemIcon(item);
             const itemImg = popup.getElementsByTagName('img').item(0);
             expect(itemImg).toBeInTheDocument();
             expect(itemImg, baseElement.innerHTML).toHaveAttribute('src', expectedIcon);

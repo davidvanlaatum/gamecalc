@@ -221,11 +221,11 @@ async function generateIcons() {
     `
 import { Item } from './items';
 
-export const icons = import.meta.glob('../../assets/MedievalDynasty/**/*.png', {
+export const icons: Record<string, string> = import.meta.glob('../../assets/MedievalDynasty/**/*.png', {
   import: 'default',
   eager: true,
-}) as Record<string, () => Promise<string>>;
-export const itemIcons: Record<Item,(() => Promise<string>) | string> = {
+});
+export const itemIcons: Record<Item, string> = {
 ${itemIconMappings}
 };
 `,

@@ -1,8 +1,8 @@
-import { HTMLAttributes, useEffect, useState } from 'react';
 import { BuildingType, getBuildingIcon } from '@/data/MedievalDynasty';
-import Image from '../Image.tsx';
+import Image, { ImageProps } from '../Image.tsx';
+import RomanNumberIcon from '@/controls/MedievalDynasty/RomanNumberIcon.tsx';
 
-export interface ItemIconProps extends HTMLAttributes<HTMLImageElement> {
+export interface ItemIconProps extends Omit<ImageProps, 'src'> {
   building: BuildingType;
   level?: number;
 }
@@ -15,18 +15,15 @@ function BuildingIcon({ building, level, className, ...extra }: Readonly<ItemIco
     return 'I'.repeat(num);
   }
 
-  const [iconUrl, setIconUrl] = useState<string>();
-  useEffect(() => {
-    getBuildingIcon(building).then(setIconUrl, () => setIconUrl(undefined));
-  }, [building]);
   return (
     <span title={building + (level ? ' ' + toRoman(level) : '')}>
-      <Image className={[className, 'zoom-icon-3x'].filter((x) => x).join(' ')} src={iconUrl} {...extra} />
+      <Image
+        className={[className, 'zoom-icon-3x'].filter((x) => x).join(' ')}
+        src={getBuildingIcon(building)}
+        {...extra}
+      />
       {level && level > 0 && (
-        <Image
-          className={[className, 'zoom-icon-1-5x'].filter((x) => x).join(' ')}
-          src={`src/assets/MedievalDynasty/Roman_${level}.png`}
-        />
+        <RomanNumberIcon className={[className, 'zoom-icon-1-5x'].filter((x) => x).join(' ')} value={level} />
       )}
     </span>
   );

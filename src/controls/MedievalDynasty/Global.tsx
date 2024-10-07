@@ -12,6 +12,7 @@ import ItemIcon from './ItemIcon.tsx';
 import Row from 'react-bootstrap/Row';
 import { InputGroup, ToggleButton } from 'react-bootstrap';
 import InputGroupText from 'react-bootstrap/InputGroupText';
+import RomanNumberIcon from '@/controls/MedievalDynasty/RomanNumberIcon.tsx';
 
 export interface GlobalProps {
   data: MedievalDynastyData;
@@ -141,15 +142,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
               variant="secondary"
               size="sm"
             >
-              {i > 0 ? (
-                <img
-                  alt={`${i}`}
-                  className="inline-icon zoom-icon-2x"
-                  src={`src/assets/MedievalDynasty/Roman_${i}.png`}
-                />
-              ) : (
-                i
-              )}
+              {i > 0 ? <RomanNumberIcon value={i} alt={`${i}`} className="inline-icon zoom-icon-2x" /> : i}
             </ToggleButton>
           ))}
           <InputGroupText>

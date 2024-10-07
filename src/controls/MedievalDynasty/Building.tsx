@@ -15,10 +15,10 @@ import ProductionBuilding from './ProductionBuilding.tsx';
 import Field from './Field.tsx';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import './Building.css';
-import Image from '../Image.tsx';
 import BuildingHouse from './BuildingHouse.tsx';
 import BuildingMarketStall from './BuildingMarketStall.tsx';
 import BuildingStorage from '@/controls/MedievalDynasty/BuildingStorage.tsx';
+import RomanNumberIcon from '@/controls/MedievalDynasty/RomanNumberIcon.tsx';
 
 interface BuildingProps {
   building: BuildingSubTypes;
@@ -154,11 +154,7 @@ const Building = forwardRef<BuildingRef, BuildingProps>(
                     active={(building.level ?? 0) === index}
                     className="py-0 border-0"
                   >
-                    <Image
-                      src={'src/assets/MedievalDynasty/Roman_' + (index + 1) + '.png'}
-                      alt={'Level ' + (index + 1)}
-                      style={{ height: '1em', width: '1em' }}
-                    />
+                    <RomanNumberIcon value={index + 1} className="inline-icon" alt={'Level ' + (index + 1)} />
                   </Button>
                 ))}
               </ButtonGroup>

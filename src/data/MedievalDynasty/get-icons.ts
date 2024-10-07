@@ -2,24 +2,11 @@ import { Item } from '@/data/MedievalDynasty/items.ts';
 import { icons, itemIcons } from '@/data/MedievalDynasty/icons.ts';
 import { BuildingType, SkillType } from '@/data/MedievalDynasty/buildings.ts';
 
-// const { itemIcons } = await import('./icons.ts');
-
-export async function getItemIcon(item: Item) {
-  const icon = itemIcons[item];
-  if (typeof icon === 'string') {
-    return icon;
-  } else if (typeof icon === 'function') {
-    console.log('loading', item);
-    return icon().then((icon) => {
-      itemIcons[item] = icon;
-      return icon;
-    });
-  } else {
-    console.log(item, icon);
-  }
+export function getItemIcon(item: Item) {
+  return itemIcons[item];
 }
 
-const skillIcons: Record<SkillType, (() => Promise<string>) | string> = {
+const skillIcons: Record<SkillType, string> = {
   [SkillType.Extraction]: icons['../../assets/MedievalDynasty/Skills/Skills_Icon_Extraction.png'],
   [SkillType.Hunting]: icons['../../assets/MedievalDynasty/Skills/Skills_Icon_Hunting.png'],
   [SkillType.Farming]: icons['../../assets/MedievalDynasty/Skills/Skills_Icon_Farming.png'],
@@ -28,18 +15,11 @@ const skillIcons: Record<SkillType, (() => Promise<string>) | string> = {
   [SkillType.Production]: icons['../../assets/MedievalDynasty/Skills/Skills_Icon_Crafting.png'],
 };
 
-export async function getSkillIcon(skill: SkillType) {
-  const icon = skillIcons[skill];
-  if (typeof icon === 'string') {
-    return icon;
-  }
-  return icon().then((icon) => {
-    skillIcons[skill] = icon;
-    return icon;
-  });
+export function getSkillIcon(skill: SkillType) {
+  return skillIcons[skill];
 }
 
-const buildingIcons: Record<BuildingType, (() => Promise<string>) | string> = {
+const buildingIcons: Record<BuildingType, string> = {
   [BuildingType.SimpleSmallHouse]: icons['../../assets/MedievalDynasty/Buildings/T_Icon_SimpleSmallHouse.png'],
   [BuildingType.SimpleHouse]: icons['../../assets/MedievalDynasty/Buildings/T_Icon_SimpleHouse.png'],
   [BuildingType.House]: icons['../../assets/MedievalDynasty/Buildings/T_Icon_House.png'],
@@ -72,13 +52,10 @@ const buildingIcons: Record<BuildingType, (() => Promise<string>) | string> = {
   [BuildingType.BuildersHut]: icons['../../assets/MedievalDynasty/Buildings/T_Icon_BuildersHut.png'],
 };
 
-export async function getBuildingIcon(building: BuildingType) {
-  const icon = buildingIcons[building];
-  if (typeof icon === 'string') {
-    return icon;
-  }
-  return icon().then((icon) => {
-    buildingIcons[building] = icon;
-    return icon;
-  });
+export function getBuildingIcon(building: BuildingType) {
+  return buildingIcons[building];
+}
+
+export function getRoman(roman: number) {
+  return icons[`../../assets/MedievalDynasty/Roman_${roman}.png`];
 }

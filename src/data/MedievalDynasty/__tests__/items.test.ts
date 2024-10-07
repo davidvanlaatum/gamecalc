@@ -87,12 +87,12 @@ describe('items', async () => {
 });
 
 describe('getItemIcon', () => {
-  test('returns the correct icon for Log', async () => {
-    expect(await getItemIcon(Item.Log)).toEqual('/src/assets/MedievalDynasty/ItemsIcons/T_Icon_Log.png');
+  test('returns the correct icon for Log', () => {
+    expect(getItemIcon(Item.Log)).toEqual('/src/assets/MedievalDynasty/ItemsIcons/T_Icon_Log.png');
   });
   Object.entries(Item).forEach(([key, value]) => {
-    test(`returns the correct icon for ${key}`, async () => {
-      expect(await getItemIcon(value)).toContain('/src/assets/MedievalDynasty');
+    test(`returns the correct icon for ${key}`, () => {
+      expect(getItemIcon(value)).toContain('/src/assets/MedievalDynasty');
     });
   });
 });

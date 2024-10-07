@@ -2,25 +2,47 @@ import { Outlet } from 'react-router-dom';
 import { Container, Nav, Navbar } from 'react-bootstrap';
 import { AlertsProvider } from './controls/Alerts.tsx';
 import { AppVersion, version } from '@/version.ts';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const basename = (import.meta.env.VITE_BASE_PATH ?? '/') as string;
 
+const minVersionCheckInterval = version.commit == 'dev' ? 5000 : 30000;
+const versionCheckInterval = version.commit == 'dev' ? 5000 : 600000;
+
 function Header() {
-  async function checkVersion() {
-    const res = await fetch(`${basename}version.json`);
-    if (res.status == 200) {
-      const data = (await res.json()) as AppVersion;
-      if (typeof data == 'object' && data.version != version.version && data.commit != version.commit) {
-        window.location.reload();
+  const [lastVersionCheck, setLastVersionCheck] = useState<Date>();
+  const checkVersion = useCallback(async () => {
+    if (
+      lastVersionCheck === undefined ||
+      new Date().getTime() - lastVersionCheck.getTime() >= minVersionCheckInterval
+    ) {
+      const res = await fetch(`${basename}version.json`, { cache: 'no-cache' });
+      if (res.status == 200) {
+        const data = (await res.json()) as AppVersion;
+        if (typeof data == 'object' && data.version != version.version && data.commit != version.commit) {
+          window.location.reload();
+        }
+        setLastVersionCheck(new Date());
       }
     }
-  }
+  }, [lastVersionCheck]);
 
   useEffect(() => {
-    const id = setInterval(() => void checkVersion(), 60000);
+    const id = setInterval(() => void checkVersion(), versionCheckInterval);
     return () => clearInterval(id);
-  }, []);
+  }, [checkVersion]);
+
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'visible') {
+        console.log('Visibility changed to visible');
+        void checkVersion();
+      }
+    }
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange);
+  }, [checkVersion]);
 
   return (
     <>

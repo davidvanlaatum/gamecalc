@@ -13,7 +13,7 @@ function header() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href={basename}>Home</Nav.Link>
-            <Nav.Link href={`${basename}/medieval_dynasty`}>
+            <Nav.Link href={`${basename}medieval_dynasty`}>
               <img alt="logo" src={`${basename}T_GameSymbol.png`} style={{ height: '1em' }} /> Medieval Dynasty
             </Nav.Link>
           </Nav>

@@ -41,7 +41,7 @@ jobs:
           percentage: "50"
           filename: "coverage/clover.xml"
         if: always()
-
+      - run: mkdir -p ./badges
       - name: Generate the badge SVG image
         uses: emibcn/badge-action@v2
         id: badge

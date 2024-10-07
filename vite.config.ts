@@ -23,9 +23,13 @@ export default defineConfig({
     coverage: {
       enabled: true,
       provider: 'v8',
-      reporter: ['text', 'json', 'html', 'lcov'],
+      reporter: ['text', 'json', 'html', 'lcov', 'clover'],
       reportOnFailure: true,
       reportsDirectory: './coverage', // Ensure the reports are written to the correct directory
     },
+    reporters: ['default','github-actions','junit'],
+    outputFile: {
+      junit: 'junit.xml',
+    }
   },
 });

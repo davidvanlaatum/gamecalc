@@ -31,3 +31,4 @@ src/data/MedievalDynasty/__tests__/items-wiki.test.ts
 *.xlsx
 *.tsbuildinfo
 /coverage
+/junit.xml

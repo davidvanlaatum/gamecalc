@@ -42,6 +42,7 @@ jobs:
           filename: "coverage/clover.xml"
         if: always()
       - run: mkdir -p ./badges
+        if: always()
       - name: Generate the badge SVG image
         uses: emibcn/badge-action@v2
         id: badge

@@ -142,7 +142,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
               variant="secondary"
               size="sm"
             >
-              {i > 0 ? <RomanNumberIcon value={i} alt={`${i}`} className="inline-icon zoom-icon-2x" /> : i}
+              {i > 0 ? <RomanNumberIcon value={i} alt={`${i}`} className="inline-icon zoom-icon-2x" /> : <>&nbsp;</>}
             </ToggleButton>
           ))}
           <InputGroupText>

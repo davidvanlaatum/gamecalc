@@ -12,9 +12,9 @@ function header() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/medieval_dynasty">
-              <img alt="logo" src={basename + 'T_GameSymbol.png'} style={{ height: '1em' }} /> Medieval Dynasty
+            <Nav.Link href={basename}>Home</Nav.Link>
+            <Nav.Link href={`${basename}/medieval_dynasty`}>
+              <img alt="logo" src={`${basename}T_GameSymbol.png`} style={{ height: '1em' }} /> Medieval Dynasty
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

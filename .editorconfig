@@ -1,4 +1,4 @@
-[{*.tsx,*.ts}]
+[{*.tsx,*.ts,*.js}]
 indent_size = 2
 indent_style = space
 end_of_line = lf
@@ -6,3 +6,50 @@ trim_trailing_whitespace = true
 max_line_length = 120
 insert_final_newline = true
 
+[{*.yaml,*.yml}]
+indent_size = 2
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+max_line_length = 120
+insert_final_newline = true
+
+[*.html]
+indent_size = 2
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+max_line_length = 120
+insert_final_newline = true
+
+[*.json]
+indent_size = 2
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+max_line_length = 120
+insert_final_newline = true
+
+[*.md]
+indent_size = 2
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+max_line_length = 120
+insert_final_newline = true
+
+[*.css]
+indent_size = 2
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+max_line_length = 120
+insert_final_newline = true
+
+[.editorconfig]
+indent_size = 2
+indent_style = space
+end_of_line = lf
+trim_trailing_whitespace = true
+max_line_length = 120
+insert_final_newline = true

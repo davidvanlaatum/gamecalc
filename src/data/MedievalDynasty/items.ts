@@ -379,6 +379,8 @@ export enum ItemEffectType {
   MoreDamage = 'More Damage',
   LessStaminaConsumption = 'Less Stamina Consumption',
   LessFoodConsumption = 'Less Food Consumption',
+  LessWaterConsumption = 'Less Water Consumption',
+  WeightLimit = 'Weight Limit',
 }
 
 export interface ItemEffect {
@@ -667,17 +669,33 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     byproduct: { item: Item.WoodenBowl, amount: 0.98 },
     rots: RotRate.High,
     weight: 0.7,
+    basePrice: 32,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.TemperatureTolerance, value: 2, duration: 210 }],
   },
   [Item.Stew]: {
     provides: [{ item: Item.Food, amount: 40, priority: 26 }],
     byproduct: { item: Item.WoodenBowl, amount: 0.98 },
     rots: RotRate.High,
     weight: 0.75,
+    basePrice: 23,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.LessStaminaConsumption, value: 30, duration: 70 }],
   },
   [Item.Soup]: {
-    provides: [{ item: Item.Food, amount: 0, priority: 21 }],
+    provides: [
+      { item: Item.Food, amount: 60, priority: 21 },
+      { item: Item.Water, amount: 20, priority: 0 },
+    ],
     byproduct: { item: Item.WoodenBowl, amount: 0.98 },
     rots: RotRate.High,
+    weight: 0.75,
+    basePrice: 50,
+    type: ItemCategory.Food,
+    effects: [
+      { type: ItemEffectType.TemperatureTolerance, value: 2, duration: 360 },
+      { type: ItemEffectType.WeightLimit, value: 3, duration: 360 },
+    ],
   },
   [Item.MeatWithGravy]: {
     provides: [
@@ -695,11 +713,20 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
       type: 'Production',
     },
   },
-  [Item.FlatBread]: { provides: [{ item: Item.Food, amount: 0, priority: 33 }], rots: RotRate.Medium },
+  [Item.FlatBread]: {
+    provides: [{ item: Item.Food, amount: 22, priority: 33 }],
+    rots: RotRate.Medium,
+    weight: 0.2,
+    basePrice: 9,
+    type: ItemCategory.Food,
+  },
   [Item.ScrambledEggs]: {
-    provides: [{ item: Item.Food, amount: 0, priority: 39 }],
+    provides: [{ item: Item.Food, amount: 12, priority: 39 }],
     byproduct: { item: Item.WoodenBowl, amount: 0.98 },
     rots: RotRate.High,
+    weight: 0.2,
+    basePrice: 7,
+    type: ItemCategory.Food,
   },
   [Item.SaltedMeat]: {
     provides: [
@@ -776,6 +803,8 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     rots: RotRate.High,
     harvestSeasons: [Season.Spring],
     effects: [{ type: ItemEffectType.Poisoning, value: 20 }],
+    basePrice: 0.2,
+    type: ItemCategory.Food,
   },
   [Item.Berry]: {
     provides: [
@@ -843,48 +872,78 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     ],
     weight: 0.1,
     rots: RotRate.High,
+    basePrice: 10,
+    type: ItemCategory.Food,
+    effects: [
+      {
+        type: ItemEffectType.LessStaminaConsumption,
+        value: 50,
+        duration: 210,
+      },
+    ],
   },
   [Item.BitterBoleteMushroom]: {
     provides: [{ item: Item.Food, amount: 1.5, priority: 74 }],
     weight: 0.1,
     rots: RotRate.High,
     harvestSeasons: [Season.Autumn],
+    basePrice: 0.6,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 50 }],
   },
   [Item.BoleteMushroom]: {
     provides: [{ item: Item.Food, amount: 1.5, priority: 68 }],
     weight: 0.1,
     rots: RotRate.High,
     harvestSeasons: [Season.Autumn],
+    basePrice: 0.6,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 2 }],
   },
   [Item.FlyAgaricMushroom]: {
     provides: [{ item: Item.Food, amount: 1.5, priority: 0 }],
     weight: 0.1,
     rots: RotRate.High,
     harvestSeasons: [Season.Autumn],
+    basePrice: 0.6,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 100 }],
   },
   [Item.ParasolMushroom]: {
     provides: [{ item: Item.Food, amount: 1.5, priority: 69 }],
     weight: 0.1,
     rots: RotRate.High,
     harvestSeasons: [Season.Autumn],
+    basePrice: 0.6,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 2 }],
   },
   [Item.RedPineMushroom]: {
     provides: [{ item: Item.Food, amount: 1.5, priority: 70 }],
     weight: 0.1,
     rots: RotRate.High,
     harvestSeasons: [Season.Autumn],
+    basePrice: 0.6,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 2 }],
   },
   [Item.WoolyMilkCapMushroom]: {
     provides: [{ item: Item.Food, amount: 1.5, priority: 75 }],
     weight: 0.1,
     rots: RotRate.High,
     harvestSeasons: [Season.Autumn],
+    basePrice: 0.6,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 50 }],
   },
   [Item.MorelMushroom]: {
     provides: [{ item: Item.Food, amount: 1.5, priority: 71 }],
     weight: 0.1,
     rots: RotRate.High,
     harvestSeasons: [Season.Spring],
+    basePrice: 0.6,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 2 }],
   },
   [Item.Pike]: {
     provides: [
@@ -893,6 +952,9 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     ],
     weight: 1.4,
     rots: RotRate.High,
+    basePrice: 36,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 20 }],
   },
   [Item.Roach]: {
     provides: [
@@ -901,6 +963,13 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     ],
     weight: 0.2,
     rots: RotRate.High,
+    basePrice: 7,
+    type: ItemCategory.Food,
+    effects: [
+      { type: ItemEffectType.Poisoning, value: 20 },
+      { type: ItemEffectType.LessFoodConsumption, value: 50, duration: 120 },
+      { type: ItemEffectType.LessWaterConsumption, value: 50, duration: 120 },
+    ],
   },
   [Item.Perch]: {
     provides: [
@@ -909,6 +978,9 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     ],
     weight: 0.8,
     rots: RotRate.High,
+    basePrice: 21,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.Poisoning, value: 20 }],
   },
   [Item.FishMeat]: {
     provides: [{ item: Item.Food, amount: 10, priority: 41 }],
@@ -916,11 +988,15 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     rots: RotRate.High,
     type: ItemCategory.Food,
     basePrice: 10,
+    effects: [{ type: ItemEffectType.LessStaminaConsumption, value: 30, duration: 180 }],
   },
   [Item.RoastedFishMeat]: {
     provides: [{ item: Item.Food, amount: 13, priority: 38 }],
     weight: 0.2,
     rots: RotRate.High,
+    basePrice: 19,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.LessFoodConsumption, value: 45, duration: 600 }],
   },
   [Item.DriedFishMeat]: {
     provides: [{ item: Item.Food, amount: 11, priority: 40 }],
@@ -928,6 +1004,7 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     rots: RotRate.Low,
     type: ItemCategory.Food,
     basePrice: 20,
+    effects: [{ type: ItemEffectType.LessFoodConsumption, value: 55, duration: 700 }],
   },
   [Item.SaltedFishMeat]: {
     provides: [
@@ -936,6 +1013,9 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     ],
     weight: 0.2,
     rots: RotRate.High,
+    basePrice: 23,
+    type: ItemCategory.Food,
+    effects: [{ type: ItemEffectType.LessFoodConsumption, value: 70, duration: 680 }],
   },
 
   [Item.ToolHammer]: { synthetic: true },
@@ -948,7 +1028,12 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
   [Item.ToolKnife]: { synthetic: true },
   [Item.ToolShearingScissors]: { synthetic: true },
 
-  [Item.WoodenBowl]: { weight: 0.2, technology: { type: 'Production', level: 5, purchasePrice: 0 } },
+  [Item.WoodenBowl]: {
+    weight: 0.2,
+    technology: { type: 'Production', level: 5, purchasePrice: 0 },
+    basePrice: 0.8,
+    type: ItemCategory.Resource,
+  },
   [Item.Wood]: { synthetic: true },
   [Item.Food]: { synthetic: true },
   [Item.Water]: { synthetic: true },
@@ -1014,14 +1099,23 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     growthSeasons: 0,
     grows: Item.Flax,
     type: ItemCategory.Resource,
+    weight: 0.02,
+    basePrice: 6,
   },
   [Item.PoppySeed]: {
     plantingSeasons: [Season.Spring],
     growthSeasons: 1,
     grows: Item.Poppy,
     type: ItemCategory.Resource,
+    basePrice: 3,
+    weight: 0.01,
   },
-  [Item.Rot]: { provides: [{ item: Item.Food, amount: 0.3, priority: 78 }], weight: 0.05, type: ItemCategory.Food },
+  [Item.Rot]: {
+    provides: [{ item: Item.Food, amount: 0.3, priority: 78 }],
+    weight: 0.05,
+    type: ItemCategory.Food,
+    basePrice: 0,
+  },
   [Item.Coin]: { weight: 0, type: ItemCategory.Other },
   [Item.Wheat]: {
     weight: 0.06,
@@ -1029,6 +1123,16 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
     type: ItemCategory.Resource,
   },
   [Item.Oat]: { weight: 0.06, basePrice: 6, type: ItemCategory.Resource },
+  [Item.Rye]: { weight: 0.06, basePrice: 6, type: ItemCategory.Resource },
+  [Item.AppleSeedling]: { weight: 1, basePrice: 13, type: ItemCategory.Resource },
+  [Item.PearSeedling]: { weight: 1, basePrice: 17, type: ItemCategory.Resource },
+  [Item.PlumSeedling]: { weight: 1, basePrice: 17, type: ItemCategory.Resource },
+  [Item.CherrySeedling]: { weight: 1, basePrice: 17, type: ItemCategory.Resource },
+  [Item.Flax]: { weight: 0.05, basePrice: 6, type: ItemCategory.Resource },
+  [Item.FlaxStalk]: { weight: 0.04, basePrice: 4, type: ItemCategory.Resource },
+  [Item.Poppy]: { weight: 0.05, basePrice: 6, type: ItemCategory.Resource },
+  [Item.AnimalFeed]: { weight: 0.2, basePrice: 16, type: ItemCategory.Resource },
+  [Item.Manure]: { weight: 0.25, basePrice: 0.9, type: ItemCategory.Resource },
 };
 
 function calcProviders(): Record<Item, { item: Item; provides: ItemPropertiesProvides }[]> {

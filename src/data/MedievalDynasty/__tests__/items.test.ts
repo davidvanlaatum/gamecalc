@@ -37,7 +37,7 @@ describe('items', async () => {
 
   function getLineNumber(item: string) {
     const line = lineNumbers[item] ?? lineNumbers['end'];
-    return line ? item + '\nsrc/data/MedievalDynasty/items.ts:' + line : undefined;
+    return line ? '\nsrc/data/MedievalDynasty/items.ts:' + line : undefined;
   }
 
   Object.entries(Item).forEach(([key, value]) => {
@@ -56,7 +56,9 @@ describe('items', async () => {
             });
           }
           it(`has type`, () => {
-            const expectedType = itemProperties[value]?.provides?.some((provides) => provides.item == Item.Food)
+            const expectedType = itemProperties[value]?.provides?.some(
+              (provides) => provides.item == Item.Food || provides.item == Item.Water,
+            )
               ? ItemCategory.Food
               : (expect.any(String) as string);
             expect(itemProperties[value], getLineNumber(key)).toHaveProperty('type', expectedType);

@@ -130,7 +130,7 @@ const ItemDetailsPopup: FC<ItemDetailsPopupProps> = ({ children, item, enable = 
                 </td>
               </tr>
             )}
-            {basePrice && (
+            {basePrice !== undefined && basePrice > 0 && (
               <>
                 <tr>
                   <th>Buy for</th>

@@ -78,7 +78,7 @@ describe('items', async () => {
               }
               expect(provides.amount, 'amount ' + getLineNumber(key)).not.toEqual(0);
             });
-            if (provides.item == Item.Food && value !== Item.Rot) {
+            if (provides.item == Item.Food && value !== Item.Rot && !value.match(/(Wine|Juice|Beer|Ale)$/)) {
               it(`is food so should rot`, () => {
                 expect(itemProperties[value]).toHaveProperty('rots');
               });

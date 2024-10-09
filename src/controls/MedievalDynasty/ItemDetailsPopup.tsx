@@ -167,9 +167,13 @@ const ItemDetailsPopup: FC<ItemDetailsPopupProps> = ({ children, item, enable = 
               <tr>
                 <th>Effects</th>
                 <td>
-                  {effects.map((effect) => (
-                    <ItemEffectControl key={effect.type} effect={effect} />
-                  ))}
+                  <ul>
+                    {effects.map((effect) => (
+                      <li key={effect.type}>
+                        <ItemEffectControl effect={effect} />
+                      </li>
+                    ))}
+                  </ul>
                 </td>
               </tr>
             )}

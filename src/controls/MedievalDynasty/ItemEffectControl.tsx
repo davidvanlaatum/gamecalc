@@ -7,34 +7,48 @@ export interface ItemEffectProps {
 }
 
 const ItemEffectControl: FC<ItemEffectProps> = ({ effect }) => {
+  function duration(value: number | undefined): string {
+    return value === undefined ? '' : ' for ' + formatDuration(value);
+  }
+  function value(value: number | undefined, suffix?: string): string | undefined {
+    if (value !== undefined) {
+      return `${(value ?? 0) > 0 ? '+' : ''}${value}${suffix ?? ''}`;
+    }
+  }
   switch (effect.type) {
-    case ItemEffectType.HealthPerSecond:
+    case ItemEffectType.HealthPerSecond: // per second
       return (
         <>
-          {(effect.value ?? 0) > 0 ? '+' : ''}
-          {effect.value}/s Health for {formatDuration(effect.duration)}
+          {value(effect.value, '/s')} {effect.type.replace(' Per Second', '')} {duration(effect.duration)}
         </>
       );
     case ItemEffectType.LessStaminaConsumption:
-      return (
-        <>
-          {effect.value}% {effect.type} for {formatDuration(effect.duration)}
-        </>
-      );
+    case ItemEffectType.LessWaterConsumption:
+    case ItemEffectType.LessFoodConsumption:
     case ItemEffectType.MoreDamage:
-      return (
-        <>
-          {effect.value}% more Damage for {formatDuration(effect.duration)}
-        </>
-      );
     case ItemEffectType.Poisoning:
-      return <>{effect.value}% poisoning</>;
-    default:
+    case ItemEffectType.Alcohol:
       return (
         <>
-          {effect.value} {effect.type} {formatDuration(effect.duration)}
+          {value(effect.value, '%')} {effect.type} {duration(effect.duration)}
         </>
       );
+    case ItemEffectType.Health:
+    case ItemEffectType.TemperatureTolerance:
+      return (
+        <>
+          {value(effect.value)} {effect.type} {duration(effect.duration)}
+        </>
+      );
+    case ItemEffectType.WeightLimit:
+      return (
+        <>
+          {value(effect.value, 'Kg')} {effect.type} {duration(effect.duration)}
+        </>
+      );
+    default:
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      throw new Error(`Unknown effect type: ${effect.type}`);
   }
 };
 

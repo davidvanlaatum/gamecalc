@@ -8,7 +8,7 @@ export interface TreeTableData<K, C> {
 
 export interface TreeTableProps<K, C> {
   data: TreeTableData<K, C>[];
-  firstColumnContents: (key: K) => React.ReactNode;
+  firstColumnContents: (key: K, children: C[]) => React.ReactNode;
   remainingColumns: (key: K, child?: C) => React.ReactNode;
   rowId: (key: K, child?: C) => string;
 }
@@ -40,32 +40,25 @@ class TreeTable<K extends string, C> extends React.Component<TreeTableProps<K, C
       <>
         {data.map((item) => {
           const key = item.key;
-          const children = item.children;
-          return (
-            <React.Fragment key={rowId(key)}>
-              <tr>
-                <td>
-                  <a
+          return item.children.slice(0, this.expand[key] ? undefined : 1).map((child, index) => (
+            <tr key={rowId(key, child)}>
+              <td>
+                {index == 0 && (
+                  <button
                     onClick={() => {
                       this.expand[key] = !this.expand[key];
                       this.forceUpdate();
                     }}
+                    className="expander"
                   >
                     <i className={`bi bi-caret-${this.expand[key] ? 'down' : 'right'}`} />
-                    &nbsp;{firstColumnContents(key)}
-                  </a>
-                </td>
-                {remainingColumns(key, this.expand[key] ? children[0] : undefined)}
-              </tr>
-              {this.expand[key] &&
-                children.slice(1).map((child) => (
-                  <tr key={rowId(key, child)}>
-                    <td></td>
-                    {remainingColumns(key, child)}
-                  </tr>
-                ))}
-            </React.Fragment>
-          );
+                    &nbsp;{firstColumnContents(key, item.children)}
+                  </button>
+                )}
+              </td>
+              {remainingColumns(key, this.expand[key] ? child : undefined)}
+            </tr>
+          ));
         })}
       </>
     );

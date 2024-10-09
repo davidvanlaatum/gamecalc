@@ -40,10 +40,13 @@ function Provides() {
       <tbody>
         <TreeTable<Item, ProvideChildren>
           data={provides}
-          firstColumnContents={(key) => (
+          firstColumnContents={(key, children) => (
             <>
               <ItemIcon item={key} className="prefix-icon" />
               {key}
+              {' ('}
+              {children.length}
+              {')'}
             </>
           )}
           remainingColumns={(_key, child) => (

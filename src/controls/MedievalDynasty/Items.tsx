@@ -174,6 +174,7 @@ function Items() {
 
   return (
     <Table striped={true} hover={true} className="sticky-header">
+      <caption>{Object.keys(Item).length} Items</caption>
       <thead>
         <tr>
           <th>Item</th>
@@ -199,22 +200,26 @@ function Items() {
             <Form.Select size="sm" onChange={onChangeFilterProducedIn}>
               <option value="all">All</option>
               <option value="none">None</option>
-              {Object.values(BuildingType).map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
+              {Object.values(BuildingType)
+                .sort((a, b) => a.localeCompare(b))
+                .map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
             </Form.Select>
           </th>
           <th>
             <Form.Select size="sm" onChange={onChangeFilterUsedIn}>
               <option value="all">All</option>
               <option value="none">None</option>
-              {Object.values(BuildingType).map((value) => (
-                <option key={value} value={value}>
-                  {value}
-                </option>
-              ))}
+              {Object.values(BuildingType)
+                .sort((a, b) => a.localeCompare(b))
+                .map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
             </Form.Select>
           </th>
           <th>

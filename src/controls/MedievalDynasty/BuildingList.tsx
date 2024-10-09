@@ -16,17 +16,26 @@ function BuildingList() {
     .sort((a, b) => a.key.localeCompare(b.key));
   const treeTableRef = useRef<TreeTable<BuildingType, [string, RecipeData]>>(null);
 
+  function countForBuilding(building: BuildingType) {
+    const count = data.find((v) => v.key == building)?.children.length ?? 0;
+    return count ? ` (${count})` : '';
+  }
+
   return (
     <Table striped={true} hover={true} className="sticky-header">
+      <caption>{data.length} Buildings</caption>
       <thead>
         <tr>
           <th className="col-2">
             Building
             <div className={'float-end'}>
-              <span onClick={() => treeTableRef.current?.expandAll()} className="bi-folder-plus cursor-pointer m-1" />
-              <span
+              <button
+                onClick={() => treeTableRef.current?.expandAll()}
+                className="bi-folder-plus cursor-pointer m-1 expander"
+              />
+              <button
                 onClick={() => treeTableRef.current?.collapseAll()}
-                className="bi-folder-minus cursor-pointer m-1"
+                className="bi-folder-minus cursor-pointer m-1 expander"
               />
             </div>
           </th>
@@ -44,7 +53,8 @@ function BuildingList() {
           firstColumnContents={(key) => (
             <>
               <BuildingIcon building={key} className="prefix-icon" />
-              {key} ({data.find((v) => v.key == key)?.children.length})
+              {key}
+              {countForBuilding(key)}
             </>
           )}
           remainingColumns={(_item, item) => {

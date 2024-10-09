@@ -64,6 +64,7 @@ function Recipes() {
 
   return (
     <Table striped={true} hover={true} className="sticky-header">
+      <caption>{Object.keys(recipes).length} Recipes</caption>
       <thead>
         <tr>
           <th onClick={() => setSort('name')} className="cursor-pointer">

@@ -1,6 +1,7 @@
 import { describe, expect, it, test } from 'vitest';
 import {
   BuildingType,
+  DevelopmentStage,
   Item,
   itemProperties,
   ItemUsage,
@@ -18,6 +19,7 @@ describe('MedievalDynastyCalculator', () => {
       requiredWood: 10,
       daysPerSeason: 3,
       inspiringSpeech: 0,
+      developmentStage: DevelopmentStage.Hermitage,
       buildings: [
         {
           id: '1',

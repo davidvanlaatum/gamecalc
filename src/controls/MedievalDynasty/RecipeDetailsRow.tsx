@@ -100,7 +100,7 @@ const RecipeDetailsRow: React.FC<RecipeDetailsRowProps> = ({
 
   const skillSamples = Object.entries(recipe.skillSamples ?? {}).length ? (
     <OverlayTrigger overlay={overlay} placement="auto-start" trigger="click">
-      <td>
+      <td style={{ maxWidth: '250px' }}>
         {Object.entries(recipe.skillSamples ?? {})
           .map(
             ([key, value]) =>

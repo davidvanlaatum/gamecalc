@@ -7,6 +7,7 @@ import RenderDiff from './controls/MedievalDynasty/RenderDiff.tsx';
 import { recipes } from './data/MedievalDynasty';
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
+import ItemEffectsList from '@/controls/MedievalDynasty/ItemEffectsList.tsx';
 
 const Calculator = lazy(() => import('./controls/MedievalDynasty/Calculator.tsx'));
 const Recipes = lazy(() => import('./controls/MedievalDynasty/Recipes.tsx'));
@@ -161,6 +162,11 @@ function MedievalDynasty() {
             <Provides />
           </Suspense>
         </Tab>
+        <Tab eventKey="effects" title="Effects" className="border p-3">
+          <Suspense fallback={loading}>
+            <ItemEffectsList />
+          </Suspense>
+        </Tab>
         <Tab eventKey="items" title="Items" className="border p-3">
           <Suspense fallback={loading}>
             <Items />
@@ -180,7 +186,7 @@ function MedievalDynasty() {
             .map((undo, index) => [undo, index == undoData.length - 1 ? data : undoData[index + 1]])
             .map((undo): [object, object, Diff<any>[] | undefined] => [undo[0], undo[1], diff(undo[0], undo[1])])
             .map(([left, right, diffs], index) => (
-              <RenderDiff diff={diffs} left={left} right={right} key={index} />
+              <RenderDiff diff={diffs} left={left} right={right} key={'D' + index} />
             ))}
         </Tab>
         <Tab eventKey="export" title="Export" className="border p-3">

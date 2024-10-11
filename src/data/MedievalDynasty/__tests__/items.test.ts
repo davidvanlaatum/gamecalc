@@ -73,12 +73,17 @@ describe('items', async () => {
           }
           itemProperties[value]?.provides?.forEach((provides) => {
             it(`provides ${provides.item}`, () => {
+              expect(provides.amount, 'amount ' + getLineNumber(key)).not.toEqual(0);
               if (provides.amount > 0) {
                 expect(provides.priority, 'priority ' + getLineNumber(key)).toBeGreaterThan(0);
               }
-              expect(provides.amount, 'amount ' + getLineNumber(key)).not.toEqual(0);
             });
-            if (provides.item == Item.Food && value !== Item.Rot && !value.match(/(Wine|Juice|Beer|Ale)$/)) {
+            if (
+              provides.item == Item.Food &&
+              value !== Item.Rot &&
+              value !== Item.Mead &&
+              !value.match(/(Wine|Juice|Beer|Ale)$/)
+            ) {
               it(`is food so should rot`, () => {
                 expect(itemProperties[value]).toHaveProperty('rots');
               });

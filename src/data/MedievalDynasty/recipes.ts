@@ -58,6 +58,7 @@ export const recipes: Record<Recipe, RecipeData> = {
     }),
     ingredients: {
       [Item.Log]: 1,
+      [Item.ToolAxe]: 1,
     },
     production: {
       [Item.Plank]: 2,

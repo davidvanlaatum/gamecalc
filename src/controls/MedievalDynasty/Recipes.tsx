@@ -98,11 +98,18 @@ function Recipes() {
             <Form.Select onChange={onFilterIngredient}>
               <option value="">-</option>
               {Object.values(Item)
-                .filter((item) => !itemProperties[item]?.synthetic)
                 .sort((a, b) => a.localeCompare(b))
-                .map((item) => (
+                .map(
+                  (item) =>
+                    [item, Object.values(recipes).filter((v) => Object.keys(v.ingredients).includes(item)).length] as [
+                      Item,
+                      number,
+                    ],
+                )
+                .filter(([, count]) => count > 0)
+                .map(([item, count]) => (
                   <option key={item} value={item}>
-                    {item}
+                    {item} {` (${count})`}
                   </option>
                 ))}
             </Form.Select>
@@ -113,9 +120,18 @@ function Recipes() {
               {Object.values(Item)
                 .filter((item) => !itemProperties[item]?.synthetic)
                 .sort((a, b) => a.localeCompare(b))
-                .map((item) => (
+                .map(
+                  (item) =>
+                    [item, Object.values(recipes).filter((v) => Object.keys(v.production).includes(item)).length] as [
+                      Item,
+                      number,
+                    ],
+                )
+                .filter(([, count]) => count > 0)
+                .map(([item, count]) => (
                   <option key={item} value={item}>
                     {item}
+                    {` (${count})`}
                   </option>
                 ))}
             </Form.Select>

@@ -1188,6 +1188,34 @@ export const itemProperties: Partial<Record<Item, ItemProperties>> = {
       { type: ItemEffectType.TemperatureTolerance, value: 4, duration: 600 },
     ],
   },
+  [Item.Mead]: {
+    weight: 1,
+    basePrice: 210,
+    type: ItemCategory.Food,
+    provides: [
+      { item: Item.Food, amount: 5, priority: 0 },
+      { item: Item.Water, amount: 50, priority: 0 },
+    ],
+    effects: [
+      { type: ItemEffectType.LessStaminaConsumption, value: 80, duration: 1200 },
+      { type: ItemEffectType.TemperatureTolerance, value: 5, duration: 1200 },
+    ],
+  },
+  [Item.OatAle]: {
+    weight: 1,
+    basePrice: 100,
+    type: ItemCategory.Food,
+    provides: [
+      { item: Item.Food, amount: 2, priority: 0 },
+      { item: Item.Water, amount: 50, priority: 0 },
+    ],
+    effects: [
+      { type: ItemEffectType.Poisoning, value: -5 },
+      { type: ItemEffectType.Alcohol, value: 30 },
+      { type: ItemEffectType.LessWaterConsumption, value: 10, duration: 1100 },
+      { type: ItemEffectType.TemperatureTolerance, value: 5, duration: 1100 },
+    ],
+  },
 };
 
 function calcProviders(): Record<Item, { item: Item; provides: ItemPropertiesProvides }[]> {
@@ -1209,6 +1237,26 @@ function calcProviders(): Record<Item, { item: Item; provides: ItemPropertiesPro
 }
 
 export const providers = calcProviders();
+
+export const effectItems = Object.fromEntries(
+  Object.entries(ItemEffectType)
+    .map(
+      ([effect, value]) =>
+        [
+          effect,
+          Object.fromEntries(
+            Object.entries(itemProperties)
+              .map(
+                ([item, props]) =>
+                  [item, props.effects?.find((v) => v.type === value)] as [Item, ItemEffect | undefined],
+              )
+              .filter(([, v]) => v !== undefined)
+              .sort(([a], [b]) => a.localeCompare(b)),
+          ),
+        ] as [ItemEffectType, Partial<Record<Item, ItemEffect>>],
+    )
+    .sort(([a], [b]) => a.localeCompare(b)),
+) as Record<ItemEffectType, Partial<Record<Item, ItemEffect>>>;
 
 const seasonEnumOptions = Object.values(Season);
 for (const props of Object.values(itemProperties)) {

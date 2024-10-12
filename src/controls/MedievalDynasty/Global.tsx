@@ -7,7 +7,7 @@ import {
   MedievalDynastyData,
 } from '@/data/MedievalDynasty';
 import Form from 'react-bootstrap/Form';
-import { convertStringToFloatOrCurrentValue } from '@/utils.ts';
+import { convertStringToFloatOrCurrentValue, validNumber } from '@/utils.ts';
 import ItemIcon from './ItemIcon.tsx';
 import Row from 'react-bootstrap/Row';
 import { InputGroup, ToggleButton } from 'react-bootstrap';
@@ -34,6 +34,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
             type="number"
             value={data.requiredFood}
             min={0}
+            isInvalid={!validNumber(data.requiredFood, { min: 0, maxDecimals: 1 })}
             onChange={(ev) =>
               onUpdate({
                 ...data,
@@ -50,6 +51,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
             type="number"
             value={data.requiredWater}
             min={0}
+            isInvalid={!validNumber(data.requiredWater, { min: 0, maxDecimals: 1 })}
             onChange={(ev) =>
               onUpdate({
                 ...data,
@@ -68,6 +70,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
             value={data.requiredWood}
             min={0}
             id="requiredWood"
+            isInvalid={!validNumber(data.requiredWood, { min: 0, maxDecimals: 1 })}
             onChange={(ev) =>
               onUpdate({
                 ...data,
@@ -85,6 +88,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
             value={data.daysPerSeason}
             min={1}
             id="daysPerSeason"
+            isInvalid={!validNumber(data.daysPerSeason, { min: 1, maxDecimals: 0 })}
             onChange={(ev) =>
               onUpdate({
                 ...data,
@@ -143,6 +147,7 @@ const Global: FC<GlobalProps> = ({ data, onUpdate }) => {
             max={300}
             step={10}
             htmlSize={3}
+            isInvalid={!validNumber(data.taxPercent, { min: 0, max: 300, maxDecimals: 0, multipleOf: 10 })}
             onChange={(ev) =>
               onUpdate({ ...data, taxPercent: convertStringToFloatOrCurrentValue(ev.target.value, data.taxPercent) })
             }

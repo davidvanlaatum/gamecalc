@@ -4,7 +4,7 @@ import useLocalStorage from './useLocalstorage.ts';
 import { Diff, diff } from 'deep-diff';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import RenderDiff from './controls/MedievalDynasty/RenderDiff.tsx';
-import { recipes } from './data/MedievalDynasty';
+import { DevelopmentStage, recipes } from './data/MedievalDynasty';
 import { saveAs } from 'file-saver';
 import Papa from 'papaparse';
 import ItemEffectsList from '@/controls/MedievalDynasty/ItemEffectsList.tsx';
@@ -17,7 +17,19 @@ const BuildingList = lazy(() => import('./controls/MedievalDynasty/BuildingList.
 
 function MedievalDynasty() {
   const [tab, setTab] = useLocalStorage<string>('medieval_dynasty_tab', 'calculator');
-  const [data, setData] = useLocalStorage<object>('medieval_dynasty', {});
+  const [data, setData] = useLocalStorage<object>('medieval_dynasty', {
+    requiredFood: 0,
+    requiredWater: 0,
+    requiredWood: 0,
+    daysPerSeason: 3,
+    taxPercent: 100,
+    inspiringSpeech: 0,
+    developmentStage: DevelopmentStage.Traveler,
+    buildings: [],
+    foodConsumeAllowList: {},
+    woodConsumeAllowList: {},
+    waterConsumeAllowList: {},
+  });
   const [undoData, setUndoData] = useLocalStorage<object[]>('medieval_dynasty_undo', []);
   const [redoData, setRedoData] = useLocalStorage<object[]>('medieval_dynasty_redo', []);
   const [previousData, setPreviousData] = useState<string>();
@@ -149,7 +161,7 @@ function MedievalDynasty() {
       >
         <Tab eventKey="calculator" title="Calculator" className="border p-3">
           <Suspense fallback={loading}>
-            <Calculator />
+            <Calculator {...{ data, onUpdate: setData }} />
           </Suspense>
         </Tab>
         <Tab eventKey="recipes" title="Recipes" className="border p-3">

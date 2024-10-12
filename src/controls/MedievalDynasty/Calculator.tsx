@@ -1,4 +1,3 @@
-import useLocalStorage from '../../useLocalstorage.ts';
 import {
   BuildingOrField,
   BuildingSubTypes,
@@ -16,13 +15,17 @@ import { Accordion, AccordionBody, AccordionHeader, AccordionItem, Card, Dropdow
 import { v4 as uuid } from 'uuid';
 import Usage from './Usage.tsx';
 import AllowConsume from './AllowConsume.tsx';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { FC, useEffect, useMemo, useRef, useState } from 'react';
 import { useAlerts } from '../Alerts.tsx';
 import BuildingIcon from './BuildingIcon.tsx';
 import ItemIcon from './ItemIcon.tsx';
 
-function Calculator() {
-  const [data, setData] = useLocalStorage<MedievalDynastyData>('medieval_dynasty', {});
+export interface CalculatorProps {
+  data: MedievalDynastyData;
+  onUpdate: (data: MedievalDynastyData) => void;
+}
+
+const Calculator: FC<CalculatorProps> = ({ data, onUpdate }) => {
   const calc = useMemo(() => new MedievalDynastyCalculator(data), [data]);
   const alerts = useAlerts();
   const buildingRefs = useRef<(BuildingRef | null)[]>([]);
@@ -34,19 +37,19 @@ function Calculator() {
     if (JSON.stringify(data) !== JSON.stringify(fixed)) {
       console.log(log);
       alerts.addAlerts(log);
-      setData(fixed);
+      onUpdate(fixed);
     }
   });
 
   function updateBuilding(building: BuildingSubTypes) {
-    setData({
+    onUpdate({
       ...data,
       buildings: data.buildings?.map((b) => (b.id == building.id ? building : b)),
     });
   }
 
   function removeBuilding(building: BuildingSubTypes) {
-    setData({
+    onUpdate({
       ...data,
       buildings: data.buildings?.filter((b) => b.id != building.id),
     });
@@ -58,7 +61,7 @@ function Calculator() {
     const tmp = newBuildings[i];
     newBuildings[i] = newBuildings[i - 1];
     newBuildings[i - 1] = tmp;
-    setData({
+    onUpdate({
       ...data,
       buildings: newBuildings,
     });
@@ -70,14 +73,14 @@ function Calculator() {
     const tmp = newBuildings[i];
     newBuildings[i] = newBuildings[i + 1];
     newBuildings[i + 1] = tmp;
-    setData({
+    onUpdate({
       ...data,
       buildings: newBuildings,
     });
   }
 
   function addBuilding(type: BuildingType) {
-    setData({
+    onUpdate({
       ...data,
       buildings: [...(data.buildings ?? []), { id: uuid(), type, totalSkill: 0 } as BuildingSubTypes],
     });
@@ -107,8 +110,8 @@ function Calculator() {
 
   useEffect(() => {
     setBuildingCounts(
-      [`${calc.buildingCount} buildings`, `${calc.fieldCount} fields`, `${calc.orchardCount} orchards`].filter((s) =>
-        s.startsWith('0'),
+      [`${calc.buildingCount} buildings`, `${calc.fieldCount} fields`, `${calc.orchardCount} orchards`].filter(
+        (s) => !s.startsWith('0'),
       ),
     );
   }, [calc.buildingCount, calc.fieldCount, calc.orchardCount]);
@@ -118,7 +121,7 @@ function Calculator() {
       <Col>
         <Card>
           <Card.Body>
-            <Global data={data} onUpdate={setData} />
+            <Global data={data} onUpdate={onUpdate} />
             <Row>
               <Col>{buildingCounts.join(', ')}</Col>
               <Col className="text-end">
@@ -172,7 +175,7 @@ function Calculator() {
             <AccordionBody>
               <AllowConsume
                 allow={data.foodConsumeAllowList ?? {}}
-                onUpdate={(value) => setData({ ...data, foodConsumeAllowList: value })}
+                onUpdate={(value) => onUpdate({ ...data, foodConsumeAllowList: value })}
                 type={Item.Food}
               />
             </AccordionBody>
@@ -185,7 +188,7 @@ function Calculator() {
             <AccordionBody>
               <AllowConsume
                 allow={data.woodConsumeAllowList ?? {}}
-                onUpdate={(value) => setData({ ...data, woodConsumeAllowList: value })}
+                onUpdate={(value) => onUpdate({ ...data, woodConsumeAllowList: value })}
                 type={Item.Wood}
               />
             </AccordionBody>
@@ -198,7 +201,7 @@ function Calculator() {
             <AccordionBody>
               <AllowConsume
                 allow={data.waterConsumeAllowList ?? {}}
-                onUpdate={(value) => setData({ ...data, waterConsumeAllowList: value })}
+                onUpdate={(value) => onUpdate({ ...data, waterConsumeAllowList: value })}
                 type={Item.Water}
               />
             </AccordionBody>
@@ -207,6 +210,6 @@ function Calculator() {
       </Col>
     </Row>
   );
-}
+};
 
 export default Calculator;
